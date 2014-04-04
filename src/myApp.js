@@ -51,7 +51,6 @@ var MyLayer = cc.Layer.extend({
                 cc.log("close");
             },this);
         closeItem.setAnchorPoint(0.5, 0.5);
-
         var menu = cc.Menu.create(closeItem);
         menu.setPosition(0, 0);
         this.addChild(menu, 1);

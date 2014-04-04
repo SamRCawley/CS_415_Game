@@ -40,6 +40,7 @@
         appFiles:[
             'src/resource.js',
             'src/myApp.js'//add your own files in order here
+            'src/GameEngine.js'
         ]
     };
 
