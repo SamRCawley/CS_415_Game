@@ -1,52 +1,56 @@
-var Player = {
-    var health = 1;
-    var _currX = 0;
-    var _currY = 0;
-    var scale = 0.1;
-    var pSprite:null;
+var Player = Class.create({
+    health:1,
+    _currX:0,
+    _currY:0,
+    scale:0.1,
+    pSprite:null,
 
+    initialize: function() {
+        this.pSprite= new Image();
+        this.pSprite.src = './res/Normal/nekopewpew3.jpg';
+        var self = this;
+        this.pSprite.onload = function(){
+                self.pSprite.width = (self.pSprite.width * self.scale);
+                self.pSprite.height = (self.pSprite.height * self.scale);
+        }
+
+    },
 
     moveSprite:function(x,y, ctx)
     {
-        _currX = x;
-        _currY = y;
-        ctx.drawImage(this.getSprite(),_currX,_currY);
+        this._currX = x;
+        this._currY = y;
+        ctx.drawImage(this.getSprite(),this._currX,this._currY, this.pSprite.width, this.pSprite.height);
     },
 
     getScale:function()
     {
-        return scale;
+        return this.scale;
     },
 
     setNewScale:function(nScale)
     {
-        scale = nScale;
-    }
+        this.scale = nScale;
+    },
 
     getSprite:function(ctx)
     {
-            pSprite = new Image();
-            pSprite.onload = function() {
-            ctx.drawImage(pSprite, 250, 250);
-            };
-            pSprite.src = './res/Normal/nekopewpew3.jpg';
-
-            return pSprite;
+            return this.pSprite;
     },
 
     getHealth:function()
     {
-        return health;
+        return this.health;
     },
 
     getX:function()
     {
-        return _currX;
+        return this._currX;
     },
 
     getY:function()
     {
-        return _currY;
+        return this._currY;
     }
 
 });
