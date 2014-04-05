@@ -3,6 +3,7 @@ var gameEngine = {
     world:{},
     contactListener:{},
     Entities:{},
+    player:null,
     startWorld:function()
     {
         var	b2Vec2 = Box2D.Common.Math.b2Vec2,
@@ -32,9 +33,12 @@ var gameEngine = {
           ctx.drawImage(imageObj, 250, 250);
         };
         imageObj.src = './res/Normal/CloseSelected.png';
+
         this.Entities.push(imageObj);
          /*add additional world setup stuff*/
          /*this.stopWorld();*/
+
+         player = new Player();
     },
     stopWorld:function()
     {
@@ -61,6 +65,8 @@ var gameEngine = {
         var x = (Math.random()*800)%800;
         var y = (Math.random()*600)%600;
         ctx.drawImage(this.Entities[0], x, y);
+        player.moveSprite(x,y,ctx);
+
 
     }
 };
