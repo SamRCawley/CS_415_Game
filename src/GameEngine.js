@@ -5,7 +5,7 @@ var gameEngine = {
     var Entities,
     startWorld:function()
     {
-        updateLoop = setInterval(update(17), 17); /*updates ~60 times per second*/
+        updateLoop = window.setInterval(update(17), 17); /*updates ~60 times per second*/
         world = new b2World(new b2Vec2(0, 0), false);
         contactListener = new Box2D.Dynamics.b2ContactListener;
         contactListener.BeginContact = function(contact) {
@@ -22,14 +22,14 @@ var gameEngine = {
     },
     stopWorld:function()
     {
-        clearInterval(updateLoop)
+        window.clearInterval(updateLoop);
     },
     spawnEntity:function(EntityType){
         /*Do some stuff to create entity and register with box2d or have entity do it itself*/
     },
     update:function(dt){
         world.Step(dt, 10, 10);
-        world.ClearForces();
+        world. ();
         var nextBody = world.GetBodyList();
         while(nextBody)
         {
