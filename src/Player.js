@@ -29,7 +29,9 @@ var Player = {
             pSprite.onload = function() {
             ctx.drawImage(pSprite, 250, 250);
             };
-            pSprite.src = './res/Normal/nekopewpew3.png';
+            pSprite.src = './res/Normal/nekopewpew3.jpg';
+
+            return pSprite;
     },
 
     getHealth:function()
