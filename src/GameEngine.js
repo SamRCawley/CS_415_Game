@@ -66,6 +66,7 @@ var gameEngine = {
         var y = (Math.random()*600)%600;
         ctx.drawImage(this.Entities[0], x, y);
         player.moveSprite(x,y,ctx);
+        //This is just a test to get an image on the screen
 
 
     }
