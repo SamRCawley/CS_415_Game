@@ -3,6 +3,7 @@ var Player = {
     var _currX = 0;
     var _currY = 0;
     var scale = 0.1;
+    var pSprite:null;
 
 
     moveSprite:function(x,y, ctx)
@@ -24,11 +25,11 @@ var Player = {
 
     getSprite:function(ctx)
     {
-        var pSprite = new Image();
+            pSprite = new Image();
             pSprite.onload = function() {
-            ctx.drawImage(imageObj, 250, 250);
+            ctx.drawImage(pSprite, 250, 250);
             };
-            imageObj.src = './res/Normal/nekopewpew3.png';
+            pSprite.src = './res/Normal/nekopewpew3.png';
     },
 
     getHealth:function()
