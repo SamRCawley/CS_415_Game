@@ -4,6 +4,12 @@ var gameEngine = {
     contactListener:{},
     Entities:{},
     player:null,
+
+    init:function()
+    {
+        document.getElementById("gameCanvas").addEventListener('mousemove',onMouseMoved,false);
+    },
+
     startWorld:function()
     {
         var	b2Vec2 = Box2D.Common.Math.b2Vec2,
@@ -28,14 +34,10 @@ var gameEngine = {
         this.Entities = new Array(); /*an array of the entities may or may not be useful*/
         var c=document.getElementById("gameCanvas");
         var ctx=c.getContext("2d");
-        //var imageObj = new Image();
-        //imageObj.onload = function() {
-        //  ctx.drawImage(imageObj, 250, 250);
-       // };
-       // imageObj.src = './res/Normal/CloseSelected.png';
-       var player = new Player();
-       this.Entities.push(player);
-        //ctx.drawImage(player.getSprite(), 250, 250);
+
+        var player = new Player();
+        this.Entities.push(player);
+
          /*add additional world setup stuff*/
          /*this.stopWorld();*/
     },
@@ -61,12 +63,14 @@ var gameEngine = {
         var c=document.getElementById("gameCanvas");
         var ctx=c.getContext("2d");
         ctx.clearRect(0,0, c.width, c.height);
-        var x = (Math.random()*800)%800;
-        var y = (Math.random()*600)%600;
-        //ctx.drawImage(this.Entities[0], x, y);
-        this.Entities[0].moveSprite(x,y,ctx);
-        //This is just a test to get an image on the screen
+        this.Entities[0].moveSprite(50,50,ctx);
 
-
+    },
+    onMouseMoved:function(event)
+    {
+        var c=document.getElementById("gameCanvas");
+        var ctx=c.getContext("2d");
+        ctx.clearRect(0,0, c.width, c.height);
+        this.Entities[0].moveSprite(event.LayerX(),event.LayerY,ctx);
     }
 };
