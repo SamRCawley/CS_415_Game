@@ -13,6 +13,7 @@ var gameEngine = {
     startWorld:function()
     {
         document.getElementById("gameCanvas").addEventListener('mousemove',gameEngine.onMouseMoved,false);
+        document.getElementById("gameCanvas").style.cursor = "none";
         var	b2Vec2 = Box2D.Common.Math.b2Vec2,
         b2BodyDef = Box2D.Dynamics.b2BodyDef,
         b2Body = Box2D.Dynamics.b2Body,
@@ -72,6 +73,7 @@ var gameEngine = {
         var c=document.getElementById("gameCanvas");
         var ctx=c.getContext("2d");
         ctx.clearRect(0,0, c.width, c.height);
-        gameEngine.Entities[0].moveSprite(event.layerX,event.layerY,ctx);
+        //25 offsets the image so that the mouse is in the center of it
+        gameEngine.Entities[0].moveSprite((event.layerX - 25),(event.layerY - 25),ctx);
     }
 };
