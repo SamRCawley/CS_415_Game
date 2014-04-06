@@ -7,11 +7,12 @@ var gameEngine = {
 
     init:function()
     {
-        document.getElementById("gameCanvas").addEventListener('mousemove',onMouseMoved,false);
+
     },
 
     startWorld:function()
     {
+        document.getElementById("gameCanvas").addEventListener('mousemove',gameEngine.onMouseMoved,false);
         var	b2Vec2 = Box2D.Common.Math.b2Vec2,
         b2BodyDef = Box2D.Dynamics.b2BodyDef,
         b2Body = Box2D.Dynamics.b2Body,
@@ -60,10 +61,10 @@ var gameEngine = {
                 *//*Update entity position.  UserData should be this object of entity.*//*
             }
         }*/
-        var c=document.getElementById("gameCanvas");
-        var ctx=c.getContext("2d");
-        ctx.clearRect(0,0, c.width, c.height);
-        this.Entities[0].moveSprite(50,50,ctx);
+//        var c=document.getElementById("gameCanvas");
+//        var ctx=c.getContext("2d");
+//        ctx.clearRect(0,0, c.width, c.height);
+//        this.Entities[0].moveSprite(50,50,ctx);
 
     },
     onMouseMoved:function(event)
@@ -71,6 +72,6 @@ var gameEngine = {
         var c=document.getElementById("gameCanvas");
         var ctx=c.getContext("2d");
         ctx.clearRect(0,0, c.width, c.height);
-        this.Entities[0].moveSprite(event.LayerX(),event.LayerY,ctx);
+        gameEngine.Entities[0].moveSprite(event.layerX,event.layerY,ctx);
     }
 };
