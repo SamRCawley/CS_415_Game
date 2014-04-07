@@ -20,6 +20,14 @@ var gameEngine = {
         this.updateLoop = setInterval(function(){self.update(17);}, 17); /*updates ~60 times per second*/
         this.contactListener = new Box2D.Dynamics.b2ContactListener;
         this.contactListener.BeginContact = function(contact) {
+            var entA = contact.GetFixtureA().GetBody().GetUserData();
+            var entB = contact.GetFixtureB().GetBody().GetUserData();
+            if(typeof entB !== 'undefined' && entB !== null && typeof entA !== 'undefined' && entA !== null)
+            {
+                entA.onCollide(entB);
+                entB.onCollide(entA);
+            }
+
              };
         this.contactListener.EndContact = function(contact) {
              };

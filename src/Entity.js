@@ -61,6 +61,9 @@ var Entity = Class.create({
     redraw:function(){
         var ctx = document.getElementById('gameCanvas').getContext('2d');
         ctx.drawImage(this.getSprite(),this._currX,this._currY, this.pSprite.width, this.pSprite.height);
-    }
+    },
+
+    onCollide:function(ent)
+    {}
 
 });
