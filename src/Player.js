@@ -1,4 +1,4 @@
-var Player = Class.create({
+var Player = Class.create(Entity, {
     health:1,
     _currX:0,
     _currY:0,
@@ -14,43 +14,6 @@ var Player = Class.create({
                 self.pSprite.height = (self.pSprite.height * self.scale);
         }
 
-    },
-
-    moveSprite:function(x,y, ctx)
-    {
-        this._currX = x;
-        this._currY = y;
-        ctx.drawImage(this.getSprite(),this._currX,this._currY, this.pSprite.width, this.pSprite.height);
-    },
-
-    getScale:function()
-    {
-        return this.scale;
-    },
-
-    setNewScale:function(nScale)
-    {
-        this.scale = nScale;
-    },
-
-    getSprite:function(ctx)
-    {
-            return this.pSprite;
-    },
-
-    getHealth:function()
-    {
-        return this.health;
-    },
-
-    getX:function()
-    {
-        return this._currX;
-    },
-
-    getY:function()
-    {
-        return this._currY;
     }
 
 });
