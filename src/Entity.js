@@ -16,11 +16,14 @@ var Entity = Class.create({
 
     initialize: function() {
     },
-
-    moveSprite:function(x,y)
-    {
+    setPosition:function(x,y){
         this._currX = x;
         this._currY = y;
+    },
+    moveSprite:function(x,y)
+    {
+        if(this._body)
+            this._body.SetLinearVelocity(new b2Vec2(x/10,y/10));
     },
 
     getScale:function()
@@ -60,7 +63,7 @@ var Entity = Class.create({
 
     redraw:function(){
         var ctx = document.getElementById('gameCanvas').getContext('2d');
-        ctx.drawImage(this.getSprite(),this._currX,this._currY, this.pSprite.width, this.pSprite.height);
+        ctx.drawImage(this.getSprite(),this._currX - this.pSprite.width/2, this._currY - this.pSprite.height/2, this.pSprite.width, this.pSprite.height);
     },
 
     onCollide:function(ent)

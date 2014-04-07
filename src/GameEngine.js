@@ -52,23 +52,22 @@ var gameEngine = {
     },
     spawnEntity:function(EntityType){
         /*Do some stuff to create entity and register with box2d or have entity do it itself*/
+        //Probably var newEnt = window.[EntityType];
     },
     update:function(dt){
-/*      this.world.Step(dt, 10, 10);
-        var nextBody = world.GetBodyList();
+      this.world.Step(dt, 10, 10);
+      this.world.ClearForces();
+        var nextBody = this.world.GetBodyList();
         while(nextBody)
         {
             var currentBody = nextBody;
             nextBody = currentBody.m_next;
             if(typeof currentBody.GetUserData() !== 'undefined' && currentBody.GetUserData() !== null)
             {
-                *//*Update entity position.  UserData should be this object of entity.*//*
+                var ent = currentBody.GetUserData();
+                ent.setPosition(currentBody.GetPosition().x*10, currentBody.GetPosition().y*10);
             }
-        }*/
-//        var c=document.getElementById("gameCanvas");
-//        var ctx=c.getContext("2d");
-//        ctx.clearRect(0,0, c.width, c.height);
-//        this.Entities[0].moveSprite(50,50,ctx);
+        }
         var c=document.getElementById("gameCanvas");
         var ctx=c.getContext("2d");
         ctx.clearRect(0,0, c.width, c.height);
@@ -77,9 +76,26 @@ var gameEngine = {
             this.Entities[i].update();
         }
     },
+    timeout:null,
+    prevMouseX:null,
+    prevMouseY:null,
     onMouseMoved:function(event)
     {
+       clearTimeout(gameEngine.timeout);
+       gameEngine.timeout = setTimeout(gameEngine.onMouseStop, 50);
         //25 offsets the image so that the mouse is in the center of it
-        gameEngine.Entities[0].moveSprite((event.layerX - 25),(event.layerY - 25));
+        var x = event.layerX;
+        var y = event.layerY;
+        if(this.prevMouseX && this.prevMouseY)
+        {
+            var sensitivity = 5; //higher is slower
+            gameEngine.Entities[0].moveSprite((x-this.prevMouseX)/sensitivity, (y-this.prevMouseY)/sensitivity);
+        }
+        this.prevMouseX = x;
+        this.prevMouseY = y;
+    },
+    onMouseStop:function()
+    {
+        gameEngine.Entities[0].moveSprite(0, 0);
     }
 };
