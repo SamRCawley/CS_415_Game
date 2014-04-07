@@ -15,5 +15,9 @@ var EnemyA = Class.create(Entity, {
                 self.pSprite.height = (self.pSprite.height * self.scale);
 
                 }
-    }
+
+    },
+    update:function($super){
+            $super();
+            }
 });

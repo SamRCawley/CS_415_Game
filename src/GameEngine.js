@@ -4,23 +4,17 @@ var gameEngine = {
     contactListener:{},
     Entities:{},
     player:null,
-
-    init:function()
-    {
-
-    },
-
     startWorld:function()
     {
         document.getElementById("gameCanvas").addEventListener('mousemove',gameEngine.onMouseMoved,false);
         document.getElementById("gameCanvas").style.cursor = "none";
-        var	b2Vec2 = Box2D.Common.Math.b2Vec2,
-        b2BodyDef = Box2D.Dynamics.b2BodyDef,
-        b2Body = Box2D.Dynamics.b2Body,
-        b2FixtureDef = Box2D.Dynamics.b2FixtureDef,
-        b2World = Box2D.Dynamics.b2World,
-        b2PolygonShape = Box2D.Collision.Shapes.b2PolygonShape,
-        b2CircleShape = Box2D.Collision.Shapes.b2CircleShape;
+//        var	b2Vec2 = Box2D.Common.Math.b2Vec2,
+//        b2BodyDef = Box2D.Dynamics.b2BodyDef,
+//        b2Body = Box2D.Dynamics.b2Body,
+//        b2FixtureDef = Box2D.Dynamics.b2FixtureDef,
+//        b2World = Box2D.Dynamics.b2World,
+//        b2PolygonShape = Box2D.Collision.Shapes.b2PolygonShape,
+//        b2CircleShape = Box2D.Collision.Shapes.b2CircleShape;
         this.world = new b2World(new b2Vec2(0, 0), false);
         var self = this;
         this.updateLoop = setInterval(function(){self.update(17);}, 17); /*updates ~60 times per second*/
@@ -72,7 +66,7 @@ var gameEngine = {
         ctx.clearRect(0,0, c.width, c.height);
         for(var i=0; i<this.Entities.length; i++)
         {
-            this.Entities[i].redraw();
+            this.Entities[i].update();
         }
     },
     onMouseMoved:function(event)

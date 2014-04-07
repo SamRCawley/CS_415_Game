@@ -1,9 +1,18 @@
+ var	b2Vec2		= Box2D.Common.Math.b2Vec2,
+                    b2BodyDef	= Box2D.Dynamics.b2BodyDef,
+                    b2Body		= Box2D.Dynamics.b2Body,
+                    b2FixtureDef	= Box2D.Dynamics.b2FixtureDef,
+                    b2World		= Box2D.Dynamics.b2World,
+                    b2PolygonShape	= Box2D.Collision.Shapes.b2PolygonShape,
+                    b2CircleShape	= Box2D.Collision.Shapes.b2CircleShape;
+
 var Entity = Class.create({
     health:1,
     _currX:0,
     _currY:0,
     scale:0.1,
     pSprite:null,
+    _body:null,
 
     initialize: function() {
     },
@@ -42,6 +51,11 @@ var Entity = Class.create({
     getY:function()
     {
         return this._currY;
+    },
+
+    update:function()
+    {
+        this.redraw();
     },
 
     redraw:function(){
