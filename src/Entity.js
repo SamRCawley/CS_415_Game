@@ -5,6 +5,7 @@
                     b2World		= Box2D.Dynamics.b2World,
                     b2PolygonShape	= Box2D.Collision.Shapes.b2PolygonShape,
                     b2CircleShape	= Box2D.Collision.Shapes.b2CircleShape;
+ var b2Unit = 30;
 
 var Entity = Class.create({
     health:1,
@@ -23,7 +24,7 @@ var Entity = Class.create({
     moveSprite:function(x,y)
     {
         if(this._body)
-            this._body.SetLinearVelocity(new b2Vec2(x/10,y/10));
+            this._body.SetLinearVelocity(new b2Vec2(x/b2Unit,y/b2Unit));
     },
 
     getScale:function()

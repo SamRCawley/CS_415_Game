@@ -8,16 +8,10 @@ var gameEngine = {
     {
         document.getElementById("gameCanvas").addEventListener('mousemove',gameEngine.onMouseMoved,false);
         document.getElementById("gameCanvas").style.cursor = "none";
-//        var	b2Vec2 = Box2D.Common.Math.b2Vec2,
-//        b2BodyDef = Box2D.Dynamics.b2BodyDef,
-//        b2Body = Box2D.Dynamics.b2Body,
-//        b2FixtureDef = Box2D.Dynamics.b2FixtureDef,
-//        b2World = Box2D.Dynamics.b2World,
-//        b2PolygonShape = Box2D.Collision.Shapes.b2PolygonShape,
-//        b2CircleShape = Box2D.Collision.Shapes.b2CircleShape;
         this.world = new b2World(new b2Vec2(0, 0), false);
+        this.defineWalls();
         var self = this;
-        this.updateLoop = setInterval(function(){self.update(17);}, 17); /*updates ~60 times per second*/
+        this.updateLoop = setInterval(function(){self.update(1000/60.0);}, 1.0/60.0); /*updates ~60 times per second*/
         this.contactListener = new Box2D.Dynamics.b2ContactListener;
         this.contactListener.BeginContact = function(contact) {
             var entA = contact.GetFixtureA().GetBody().GetUserData();
@@ -65,7 +59,7 @@ var gameEngine = {
             if(typeof currentBody.GetUserData() !== 'undefined' && currentBody.GetUserData() !== null)
             {
                 var ent = currentBody.GetUserData();
-                ent.setPosition(currentBody.GetPosition().x*10, currentBody.GetPosition().y*10);
+                ent.setPosition(currentBody.GetPosition().x*b2Unit, currentBody.GetPosition().y*b2Unit);
             }
         }
         var c=document.getElementById("gameCanvas");
@@ -88,7 +82,7 @@ var gameEngine = {
         var y = event.layerY;
         if(this.prevMouseX && this.prevMouseY)
         {
-            var sensitivity = 5; //higher is slower
+            var sensitivity = b2Unit*0.3; //higher is slower
             gameEngine.Entities[0].moveSprite((x-this.prevMouseX)/sensitivity, (y-this.prevMouseY)/sensitivity);
         }
         this.prevMouseX = x;
@@ -97,5 +91,48 @@ var gameEngine = {
     onMouseStop:function()
     {
         gameEngine.Entities[0].moveSprite(0, 0);
+    },
+    defineWalls:function()
+    {
+        var unitHalfCanWidth = document.getElementById("gameCanvas").width/2/b2Unit;
+        var unitHalfCanHeight = document.getElementById("gameCanvas").height/2/b2Unit;
+        var bodyDef = new b2BodyDef();
+        bodyDef.type = b2Body.b2_staticBody;
+        //Center position on canvas
+        bodyDef.position.x = unitHalfCanWidth; //Note: Tutorials indicate position is based on center
+        bodyDef.position.y = unitHalfCanHeight; //Note: Using 10 pixels per box2d unit
+        var body = gameEngine.world.CreateBody(bodyDef);
+        var topWall = new b2FixtureDef();
+        topWall.density = 1.0;
+        topWall.friction = 0.3;
+        topWall.restitution = 0.0;
+        topWall.shape = new b2PolygonShape();
+        // half width, half height.
+        topWall.shape.SetAsEdge(new b2Vec2(-unitHalfCanWidth,-unitHalfCanHeight), new b2Vec2(unitHalfCanWidth,-unitHalfCanHeight) );
+        body.CreateFixture(topWall);
+        var bottomWall = new b2FixtureDef();
+        bottomWall.density = 1.0;
+        bottomWall.friction = 0.3;
+        bottomWall.restitution = 0.0;
+        bottomWall.shape = new b2PolygonShape();
+        // half width, half height.
+        bottomWall.shape.SetAsEdge(new  b2Vec2(-unitHalfCanWidth,unitHalfCanHeight), new b2Vec2(unitHalfCanWidth,unitHalfCanHeight) );
+        body.CreateFixture(bottomWall);
+        var leftWall = new b2FixtureDef();
+        leftWall.density = 1.0;
+        leftWall.friction = 0.3;
+        leftWall.restitution = 0.0;
+        leftWall.shape = new b2PolygonShape();
+        // half width, half height.
+        leftWall.shape.SetAsEdge( new b2Vec2(-unitHalfCanWidth,-unitHalfCanHeight), new b2Vec2(-unitHalfCanWidth,unitHalfCanHeight) );
+        body.CreateFixture(leftWall);
+        var rightWall = new b2FixtureDef();
+        rightWall.density = 1.0;
+        rightWall.friction = 0.3;
+        rightWall.restitution = 0.0;
+        rightWall.shape = new b2PolygonShape();
+        // half width, half height.
+        rightWall.shape.SetAsEdge( new b2Vec2(unitHalfCanWidth,-unitHalfCanHeight), new b2Vec2(unitHalfCanWidth,unitHalfCanHeight) );
+        body.CreateFixture(rightWall);
     }
 };
