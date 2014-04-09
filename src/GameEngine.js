@@ -1,3 +1,7 @@
+var havePointerLock = 'pointerLockElement' in document ||
+    'mozPointerLockElement' in document ||
+    'webkitPointerLockElement' in document;
+
 var gameEngine = {
     updateLoop:null,
     world:null,
@@ -7,8 +11,10 @@ var gameEngine = {
     entityTypes:['EnemyA'],
     timeout:null,
     entitySpawner:null,
+    pointerLocked:false,
     startWorld:function()
     {
+        document.getElementById("gameCanvas").addEventListener('click', gameEngine.onCanvasClick, false);
         document.getElementById("gameCanvas").addEventListener('mousemove',gameEngine.onMouseMoved,false);
         document.getElementById("gameCanvas").style.cursor = "none";
         this.world = new b2World(new b2Vec2(0, 0), false);
@@ -98,12 +104,18 @@ var gameEngine = {
        clearTimeout(gameEngine.timeout);
        gameEngine.timeout = setTimeout(gameEngine.onMouseStop, 50);
         //25 offsets the image so that the mouse is in the center of it
-        var x = event.layerX;
-        var y = event.layerY;
+          var x = event.movementX ||
+              event.mozMovementX          ||
+              event.webkitMovementX       ||
+              0;
+          var y = event.movementY ||
+              event.mozMovementY      ||
+              event.webkitMovementY   ||
+              0;
         if(this.prevMouseX && this.prevMouseY)
         {
             var sensitivity = b2Unit*.0001; //higher is slower
-            gameEngine.Entities[0].moveSprite((x-this.prevMouseX)/sensitivity, (y-this.prevMouseY)/sensitivity);
+            gameEngine.Entities[0].moveSprite((x)/sensitivity, (y)/sensitivity);
         }
         this.prevMouseX = x;
         this.prevMouseY = y;
@@ -154,5 +166,24 @@ var gameEngine = {
         // half width, half height.
         rightWall.shape.SetAsEdge( new b2Vec2(unitHalfCanWidth,-unitHalfCanHeight), new b2Vec2(unitHalfCanWidth,unitHalfCanHeight) );
         body.CreateFixture(rightWall);
+    },
+    onCanvasClick:function(){
+    if(havePointerLock && !gameEngine.pointerLocked){
+        var element =  document.getElementById("gameCanvas");
+        element.requestPointerLock = element.requestPointerLock ||
+                         element.mozRequestPointerLock ||
+                         element.webkitRequestPointerLock;
+        // Ask the browser to lock the pointer
+        element.requestPointerLock();
+        gameEngine.pointerLocked = true;
+        }
+     else if(havePointerLock && gameEngine.pointerLocked){
+        document.exitPointerLock = document.exitPointerLock ||
+        			   document.mozExitPointerLock ||
+        			   document.webkitExitPointerLock;
+        document.exitPointerLock();
+        // Ask the browser to lock the pointer
+        gameEngine.pointerLocked = false;
+        }
     }
 };
