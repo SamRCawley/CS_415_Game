@@ -1,11 +1,14 @@
 var gameEngine = {
-    updateLoop:{},
-    world:{},
-    contactListener:{},
-    Entities:{},
+    updateLoop:null,
+    world:null,
+    contactListener:null,
+    Entities:null,
     player:null,
+    entityTypes:['EnemyA'],
+    startTime:null,
     startWorld:function()
     {
+        this.startTime = new Date();
         document.getElementById("gameCanvas").addEventListener('mousemove',gameEngine.onMouseMoved,false);
         document.getElementById("gameCanvas").style.cursor = "none";
         this.world = new b2World(new b2Vec2(0, 0), false);
@@ -44,13 +47,31 @@ var gameEngine = {
     {
         window.clearInterval(updateLoop);
     },
-    spawnEntity:function(EntityType){
-        /*Do some stuff to create entity and register with box2d or have entity do it itself*/
-        //Probably var newEnt = window.[EntityType];
+    spawnEntities:function(){
+       var rTime = (new Date()-this.startTime)/1000; //in seconds
+       if(parseInt(rTime % 15) == 0)
+       {
+            var newEnt = new window[this.entityTypes[0]]();
+            newEnt.setPosition(500, 20);
+            this.Entities.push(newEnt);
+       }
+       if(parseInt(rTime % 35) == 0)
+       {
+           var newEnt = new window[this.entityTypes[0]]();
+           newEnt.setPosition(20, 20);
+           this.Entities.push(newEnt);
+       }
+       if(parseInt(rTime % 45) == 0)
+       {
+           var newEnt = new window[this.entityTypes[0]]();
+           newEnt.setPosition(900, 20);
+           this.Entities.push(newEnt);
+       }
     },
     update:function(dt){
       this.world.Step(dt, 10, 10);
       this.world.ClearForces();
+      this.spawnEntities();
         var nextBody = this.world.GetBodyList();
         while(nextBody)
         {
