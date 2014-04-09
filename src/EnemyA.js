@@ -25,6 +25,8 @@ var EnemyA = Class.create(Entity, {
             fixDef.friction = 0.3;
             fixDef.restitution = 0.8;
             fixDef.shape = new b2PolygonShape();
+            fixDef.filter.categoryBits = categories.bird;
+            fixDef.filter.maskBits = ~categories.wall;
             // half width, half height.
             fixDef.shape.SetAsBox((self.pSprite.width) / 2 /b2Unit, (self.pSprite.height) / 2 /b2Unit);
             self._body = gameEngine.world.CreateBody(bodyDef)

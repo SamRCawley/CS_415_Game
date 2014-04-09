@@ -139,6 +139,7 @@ var gameEngine = {
         topWall.friction = 0.3;
         topWall.restitution = 0.0;
         topWall.shape = new b2PolygonShape();
+        topWall.filter.categoryBits = categories.wall;
         // half width, half height.
         topWall.shape.SetAsEdge(new b2Vec2(-unitHalfCanWidth,-unitHalfCanHeight), new b2Vec2(unitHalfCanWidth,-unitHalfCanHeight) );
         body.CreateFixture(topWall);
@@ -147,6 +148,7 @@ var gameEngine = {
         bottomWall.friction = 0.3;
         bottomWall.restitution = 0.0;
         bottomWall.shape = new b2PolygonShape();
+        bottomWall.filter.categoryBits = categories.wall;
         // half width, half height.
         bottomWall.shape.SetAsEdge(new  b2Vec2(-unitHalfCanWidth,unitHalfCanHeight), new b2Vec2(unitHalfCanWidth,unitHalfCanHeight) );
         body.CreateFixture(bottomWall);
@@ -155,6 +157,7 @@ var gameEngine = {
         leftWall.friction = 0.3;
         leftWall.restitution = 0.0;
         leftWall.shape = new b2PolygonShape();
+        leftWall.filter.categoryBits = categories.wall;
         // half width, half height.
         leftWall.shape.SetAsEdge( new b2Vec2(-unitHalfCanWidth,-unitHalfCanHeight), new b2Vec2(-unitHalfCanWidth,unitHalfCanHeight) );
         body.CreateFixture(leftWall);
@@ -163,9 +166,21 @@ var gameEngine = {
         rightWall.friction = 0.3;
         rightWall.restitution = 0.0;
         rightWall.shape = new b2PolygonShape();
+        rightWall.filter.categoryBits = categories.wall;
         // half width, half height.
         rightWall.shape.SetAsEdge( new b2Vec2(unitHalfCanWidth,-unitHalfCanHeight), new b2Vec2(unitHalfCanWidth,unitHalfCanHeight) );
         body.CreateFixture(rightWall);
+        var playerWall = new b2FixtureDef();
+        playerWall.density = 1.0;
+        playerWall.friction = 0.3;
+        playerWall.restitution = 0.0;
+        playerWall.shape = new b2PolygonShape();
+        playerWall.filter.categoryBits = categories.wall;
+        playerWall.filter.maskbits = categories.player; //Only set to collide with player
+        // half width, half height.
+        playerWall.shape.SetAsEdge( new b2Vec2(-unitHalfCanWidth, -unitHalfCanHeight/2), new b2Vec2(unitHalfCanWidth,-unitHalfCanHeight/2) ); //current player wall at 75% up canvas (mostly example, I don't think I like it)
+        body.CreateFixture(playerWall);
+
     },
     onCanvasClick:function(){
     if(havePointerLock && !gameEngine.pointerLocked){

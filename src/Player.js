@@ -23,6 +23,7 @@ var Player = Class.create(Entity, {
                 fixDef.friction = 0.0;
                 fixDef.restitution = 0.0;
                 fixDef.shape = new b2PolygonShape();
+                fixDef.filter.categoryBits = categories.player;
                 // half width, half height.
                 fixDef.shape.SetAsBox((self.pSprite.width) / 2 /b2Unit, (self.pSprite.height) / 2 /b2Unit);
                 self._body = gameEngine.world.CreateBody(bodyDef)
