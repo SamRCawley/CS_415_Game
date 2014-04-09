@@ -5,16 +5,16 @@ var gameEngine = {
     Entities:null,
     player:null,
     entityTypes:['EnemyA'],
-    startTime:null,
+    timeout:null,
+    entitySpawner:null,
     startWorld:function()
     {
-        this.startTime = new Date();
         document.getElementById("gameCanvas").addEventListener('mousemove',gameEngine.onMouseMoved,false);
         document.getElementById("gameCanvas").style.cursor = "none";
         this.world = new b2World(new b2Vec2(0, 0), false);
         this.defineWalls();
         var self = this;
-        this.updateLoop = setInterval(function(){self.update(1000/60.0);}, 1.0/60.0); /*updates ~60 times per second*/
+        this.updateLoop = setInterval(function(){self.update(1.0/60.0);}, 1000/60); /*updates ~60 times per second*/
         this.contactListener = new Box2D.Dynamics.b2ContactListener;
         this.contactListener.BeginContact = function(contact) {
             var entA = contact.GetFixtureA().GetBody().GetUserData();
@@ -38,30 +38,30 @@ var gameEngine = {
         var ctx=c.getContext("2d");
         var player = new Player();
         this.Entities.push(player);
-        var enemy = new EnemyA();
-        this.Entities.push(enemy);
+        //var enemy = new EnemyA();
+        //this.Entities.push(enemy);
+        this.entitySpawner = setInterval(function(){self.spawnEntities();}, 2000);
          /*add additional world setup stuff*/
          /*this.stopWorld();*/
     },
     stopWorld:function()
     {
-        window.clearInterval(updateLoop);
+        window.clearInterval(this.updateLoop);
+        window.clearInterval(this.entitySpawner)
     },
     spawnEntities:function(){
-       var rTime = (new Date()-this.startTime)/1000; //in seconds
-       if(parseInt(rTime % 15) == 0)
-       {
-            var newEnt = new window[this.entityTypes[0]]();
-            newEnt.setPosition(500, 20);
-            this.Entities.push(newEnt);
-       }
-       if(parseInt(rTime % 35) == 0)
+    if(parseInt(Math.random()*10%2) == 0){
+        var newEnt = new window[this.entityTypes[0]]();
+        newEnt.setPosition(500, 20);
+        this.Entities.push(newEnt);
+        }
+       if(parseInt(Math.random()*10%3) == 0)
        {
            var newEnt = new window[this.entityTypes[0]]();
            newEnt.setPosition(20, 20);
            this.Entities.push(newEnt);
        }
-       if(parseInt(rTime % 45) == 0)
+       if(parseInt(Math.random()*10%3) == 0)
        {
            var newEnt = new window[this.entityTypes[0]]();
            newEnt.setPosition(900, 20);
@@ -71,7 +71,6 @@ var gameEngine = {
     update:function(dt){
       this.world.Step(dt, 10, 10);
       this.world.ClearForces();
-      this.spawnEntities();
         var nextBody = this.world.GetBodyList();
         while(nextBody)
         {
@@ -103,7 +102,7 @@ var gameEngine = {
         var y = event.layerY;
         if(this.prevMouseX && this.prevMouseY)
         {
-            var sensitivity = b2Unit*0.3; //higher is slower
+            var sensitivity = b2Unit*.0001; //higher is slower
             gameEngine.Entities[0].moveSprite((x-this.prevMouseX)/sensitivity, (y-this.prevMouseY)/sensitivity);
         }
         this.prevMouseX = x;
