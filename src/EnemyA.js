@@ -3,18 +3,14 @@ var EnemyA = Class.create(Entity, {
     _currX:0,
     _currY:0,
     scale:0.1,
-    enemyProjectile:{},
+    enemyProjectile:["Projectile"],
     pSprite:null,
-    initialize: function() {
-            this.pSprite= new Image();
-            this.pSprite.src = './res/Normal/birdenemy.png';
+    initialize: function($super, x, y) {
+            $super(x,y);
+            this.pSprite = assets.img_EnemyA;
             var self = this;
-            this._currX = 250;
-            this._currY = 300;
-            this.pSprite.onload = function(){
-                self.pSprite.width = (self.pSprite.width * self.scale);
-                self.pSprite.height = (self.pSprite.height * self.scale);
-
+            self.pSprite.width = (self.pSprite.naturalWidth * self.scale);
+            self.pSprite.height = (self.pSprite.naturalHeight * self.scale);
             var bodyDef = new b2BodyDef();
             bodyDef.type = b2Body.b2_dynamicBody;
             bodyDef.position.x = self._currX/b2Unit; //Note: Tutorials indicate position is based on center
@@ -32,21 +28,15 @@ var EnemyA = Class.create(Entity, {
             fixDef.shape.SetAsBox((self.pSprite.width) / 2 /b2Unit, (self.pSprite.height) / 2 /b2Unit);
             self._body = gameEngine.world.CreateBody(bodyDef)
             self._body.CreateFixture(fixDef);
-            }
     },
-
-//    addProjectile:function(proj){
-//            this.enemyProjectile.push(proj);
-//    },
 
     update:function($super){
             $super();
-//            enemyProjectile.forEach(function(Projectile) {
-//                Projectile.update();
-//            });
-//
-//            enemyProjectile = enemyProjectile.filter(function(Projectile) {
-//                return Projectile.active;
-//            });
+          if(Math.floor(Math.random() * 60) % 60 == 0 && this._body)
+          {
+          var proj = new window[this.enemyProjectile[0]](this._currX, this._currY+this.pSprite.height);
+          proj.moveSprite(0,200);
+          gameEngine.Entities.push(proj);
+          }
     }
 });

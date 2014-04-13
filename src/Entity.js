@@ -22,8 +22,9 @@ var Entity = Class.create({
     scale:0.1,
     pSprite:null,
     _body:null,
-
-    initialize: function() {
+    _removeTrigger:false,
+    initialize: function(x, y) {
+        this.setPosition(x,y);
     },
     setPosition:function(x,y){
         this._currX = x;

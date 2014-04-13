@@ -12,9 +12,13 @@ var gameEngine = {
     timeout:null,
     entitySpawner:null,
     pointerLocked:false,
+    setup:function(){
+        document.getElementById("gameCanvas").addEventListener('click', gameEngine.onCanvasClick, false);
+        assets.loadAssets();
+    },
     startWorld:function()
     {
-        document.getElementById("gameCanvas").addEventListener('click', gameEngine.onCanvasClick, false);
+
         document.getElementById("gameCanvas").addEventListener('mousemove',gameEngine.onMouseMoved,false);
         document.getElementById("gameCanvas").style.cursor = "none";
         this.world = new b2World(new b2Vec2(0, 0), false);
@@ -42,7 +46,7 @@ var gameEngine = {
         this.Entities = new Array(); /*an array of the entities may or may not be useful*/
         var c=document.getElementById("gameCanvas");
         var ctx=c.getContext("2d");
-        var player = new Player();
+        var player = new Player(400,500);
         this.Entities.push(player);
         //var enemy = new EnemyA();
         //this.Entities.push(enemy);
@@ -57,8 +61,7 @@ var gameEngine = {
     },
     spawnEntities:function(){
     if(parseInt(Math.random()*10%2) == 0){
-        var newEnt = new window[this.entityTypes[0]]();
-        newEnt.setPosition(500, 20);
+        var newEnt = new window[this.entityTypes[0]](500,20);
         this.Entities.push(newEnt);
 //        var proj = new window[this.entityTypes[1]]();
 //        proj.setPosition(0, 0);
@@ -66,8 +69,7 @@ var gameEngine = {
         }
        if(parseInt(Math.random()*10%3) == 0)
        {
-           var newEnt = new window[this.entityTypes[0]]();
-           newEnt.setPosition(20, 20);
+           var newEnt = new window[this.entityTypes[0]](20,20);
            this.Entities.push(newEnt);
 //           var proj = new window[this.entityTypes[1]]();
 //           proj.setPosition(0, 0);
@@ -75,8 +77,7 @@ var gameEngine = {
        }
        if(parseInt(Math.random()*10%3) == 0)
        {
-           var newEnt = new window[this.entityTypes[0]]();
-           newEnt.setPosition(900, 20);
+           var newEnt = new window[this.entityTypes[0]](900,20);
            this.Entities.push(newEnt);
 //           var proj = new window[this.entityTypes[1]]();
 //           proj.setPosition(0, 0);
@@ -102,7 +103,13 @@ var gameEngine = {
         ctx.clearRect(0,0, c.width, c.height);
         for(var i=0; i<this.Entities.length; i++)
         {
-            this.Entities[i].update();
+            if(this.Entities[i]._removeTrigger)
+            {
+                this.world.DestroyBody(this.Entities[i]._body);
+                this.Entities.splice(i, 1);
+            }
+            else
+                this.Entities[i].update();
         }
     },
     timeout:null,
@@ -200,6 +207,7 @@ var gameEngine = {
         // Ask the browser to lock the pointer
         element.requestPointerLock();
         gameEngine.pointerLocked = true;
+        gameEngine.startWorld();
         }
      else if(havePointerLock && gameEngine.pointerLocked){
         document.exitPointerLock = document.exitPointerLock ||
@@ -208,6 +216,8 @@ var gameEngine = {
         document.exitPointerLock();
         // Ask the browser to lock the pointer
         gameEngine.pointerLocked = false;
+        gameEngine.stopWorld();
         }
+
     }
 };
