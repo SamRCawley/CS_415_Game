@@ -3,6 +3,7 @@ var EnemyA = Class.create(Entity, {
     _currX:0,
     _currY:0,
     scale:0.1,
+    enemyProjectile:{},
     pSprite:null,
     initialize: function() {
             this.pSprite= new Image();
@@ -33,7 +34,19 @@ var EnemyA = Class.create(Entity, {
             self._body.CreateFixture(fixDef);
             }
     },
+
+//    addProjectile:function(proj){
+//            this.enemyProjectile.push(proj);
+//    },
+
     update:function($super){
             $super();
-            }
+//            enemyProjectile.forEach(function(Projectile) {
+//                Projectile.update();
+//            });
+//
+//            enemyProjectile = enemyProjectile.filter(function(Projectile) {
+//                return Projectile.active;
+//            });
+    }
 });

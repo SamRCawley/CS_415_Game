@@ -8,7 +8,7 @@ var gameEngine = {
     contactListener:null,
     Entities:null,
     player:null,
-    entityTypes:['EnemyA'],
+    entityTypes:['EnemyA','Projectile'], //Added projectile
     timeout:null,
     entitySpawner:null,
     pointerLocked:false,
@@ -60,18 +60,27 @@ var gameEngine = {
         var newEnt = new window[this.entityTypes[0]]();
         newEnt.setPosition(500, 20);
         this.Entities.push(newEnt);
+//        var proj = new window[this.entityTypes[1]]();
+//        proj.setPosition(0, 0);
+//        newEnt.addProjectile(proj);
         }
        if(parseInt(Math.random()*10%3) == 0)
        {
            var newEnt = new window[this.entityTypes[0]]();
            newEnt.setPosition(20, 20);
            this.Entities.push(newEnt);
+//           var proj = new window[this.entityTypes[1]]();
+//           proj.setPosition(0, 0);
+//           newEnt.addProjectile(proj);
        }
        if(parseInt(Math.random()*10%3) == 0)
        {
            var newEnt = new window[this.entityTypes[0]]();
            newEnt.setPosition(900, 20);
            this.Entities.push(newEnt);
+//           var proj = new window[this.entityTypes[1]]();
+//           proj.setPosition(0, 0);
+//           newEnt.addProjectile(proj);
        }
     },
     update:function(dt){
