@@ -22,7 +22,4 @@ var start = {
         //alert(canvas.width);
         //alert(canvas.height);
     }
-
-
-
 };
