@@ -15,6 +15,7 @@ var gameEngine = {
     setup:function(){
         document.getElementById("gameCanvas").addEventListener('click', gameEngine.onCanvasClick, false);
         assets.loadAssets();
+        start.startScreen();
     },
     startWorld:function()
     {
@@ -61,29 +62,31 @@ var gameEngine = {
         this.Entities = new Array();
     },
     spawnEntities:function(){
-    if(parseInt(Math.random()*10%2) == 0){
-        var newEnt = new window[this.entityTypes[0]](500,20);
+    var c=document.getElementById("gameCanvas");
+    if(parseInt(Math.random()*10%2) == 0){  //MIDDLE SPAWN POINT
+        var newEnt = new window[this.entityTypes[0]](c.width/2,20);
         this.Entities.push(newEnt);
-//        var proj = new window[this.entityTypes[1]]();
-//        proj.setPosition(0, 0);
-//        newEnt.addProjectile(proj);
         }
-       if(parseInt(Math.random()*10%3) == 0)
+       if(Math.floor(Math.random()*10%3) == 0)  //LEFT SPAWN POINT
        {
            var newEnt = new window[this.entityTypes[0]](20,20);
            this.Entities.push(newEnt);
-//           var proj = new window[this.entityTypes[1]]();
-//           proj.setPosition(0, 0);
-//           newEnt.addProjectile(proj);
        }
-       if(parseInt(Math.random()*10%3) == 0)
+       if(Math.floor(Math.random()*10%3) == 0) //RIGHT SPAWN POINT
        {
            var newEnt = new window[this.entityTypes[0]](900,20);
            this.Entities.push(newEnt);
-//           var proj = new window[this.entityTypes[1]]();
-//           proj.setPosition(0, 0);
-//           newEnt.addProjectile(proj);
        }
+       if(Math.floor(Math.random()*10%7) == 0) //LEFT-MIDDLE SPAWN POINT
+          {
+              var newEnt = new window[this.entityTypes[0]](c.width/4,20);
+              this.Entities.push(newEnt);
+          }
+       if(Math.floor(Math.random()*10%7) == 0) //RIGHT-MIDDLE SPAWN POINT
+         {
+             var newEnt = new window[this.entityTypes[0]](c.width*3/4,20);
+             this.Entities.push(newEnt);
+         }
     },
     update:function(dt){
         var c=document.getElementById("gameCanvas");
@@ -131,8 +134,8 @@ var gameEngine = {
               0;
         if(this.prevMouseX && this.prevMouseY)
         {
-            var sensitivity = b2Unit*.0001; //higher is slower
-            gameEngine.Entities[0].moveSprite((x)/sensitivity, (y)/sensitivity);
+            var sensitivity = 400; //higher is faster
+            gameEngine.Entities[0].moveSprite((x)*sensitivity, (y)*sensitivity);  //x and y are small due to mouse movement triggers
         }
         this.prevMouseX = x;
         this.prevMouseY = y;

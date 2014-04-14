@@ -57,11 +57,19 @@ var Projectile = Class.create(Entity, {
             gameEngine.stopWorld();
             var c=document.getElementById("gameCanvas");
             var ctx=c.getContext("2d");
+            //var measurement = ctx.measureText(text);
+            ctx.textBaseline="middle";
+            ctx.textAlign="center";
+            var y = 300
+            var gradient=ctx.createLinearGradient(0,y-40,0,y+40);
+            gradient.addColorStop("0","blue");
+            gradient.addColorStop("0.5","lightskyblue");
+            gradient.addColorStop("1.0","white");
             ctx.clearRect(0,0, c.width, c.height);
             var ctx = document.getElementById("gameCanvas").getContext("2d");
-            ctx.font="40px Georgia";
-            ctx.fillStyle = 'white';
-            ctx.fillText("Game Over!",300,300);
+            ctx.font="50pt Georgia";
+            ctx.fillStyle = gradient;
+            ctx.fillText("Game Over!",c.width/2,y);
         }
     }
 

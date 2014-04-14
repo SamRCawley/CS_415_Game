@@ -1,7 +1,15 @@
 var start = {
     centerTxt:function(ctx, text, y) {
-            var measurement = ctx.measureText(text);
-            var x = (ctx.canvas.width - measurement.width) / 2;
+            ctx.font = '70pt Comic Sans MS Bold';
+            //var measurement = ctx.measureText(text);
+            ctx.textBaseline="middle";
+            ctx.textAlign="center";
+            var gradient=ctx.createLinearGradient(0,y-35,0,y+35);
+            gradient.addColorStop("0","blue");
+            gradient.addColorStop("0.5","lightskyblue");
+            gradient.addColorStop("1.0","white");
+            ctx.fillStyle = gradient;
+            var x = ctx.canvas.width / 2;
             ctx.fillText(text, x, y);
     },
     startScreen:function(){
@@ -13,8 +21,7 @@ var start = {
             ctx=canvas.getContext('2d');
             var y = ctx.canvas.height / 2;
             title='Neko Pew Pew!';
-            ctx.fillStyle = 'white';
-            ctx.font = '48px monospace';
+
             start.centerTxt(ctx, title, y);
             x=(ctx.canvas.width - img.width) / 2;
             ctx.drawImage(img, x, y);
