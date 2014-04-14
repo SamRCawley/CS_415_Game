@@ -57,7 +57,8 @@ var gameEngine = {
     stopWorld:function()
     {
         window.clearInterval(this.updateLoop);
-        window.clearInterval(this.entitySpawner)
+        window.clearInterval(this.entitySpawner);
+        this.Entities = new Array();
     },
     spawnEntities:function(){
     if(parseInt(Math.random()*10%2) == 0){
@@ -85,6 +86,9 @@ var gameEngine = {
        }
     },
     update:function(dt){
+        var c=document.getElementById("gameCanvas");
+        var ctx=c.getContext("2d");
+        ctx.clearRect(0,0, c.width, c.height);
       this.world.Step(dt, 10, 10);
       this.world.ClearForces();
         var nextBody = this.world.GetBodyList();
@@ -98,9 +102,6 @@ var gameEngine = {
                 ent.setPosition(currentBody.GetPosition().x*b2Unit, currentBody.GetPosition().y*b2Unit);
             }
         }
-        var c=document.getElementById("gameCanvas");
-        var ctx=c.getContext("2d");
-        ctx.clearRect(0,0, c.width, c.height);
         for(var i=0; i<this.Entities.length; i++)
         {
             if(this.Entities[i]._removeTrigger)

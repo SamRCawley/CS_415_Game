@@ -50,6 +50,19 @@ var Projectile = Class.create(Entity, {
                 this._removeTrigger = true;
             var vel = this._body.GetLinearVelocity();
         }
+    },
+    onCollide:function(ent){
+        if(ent instanceof Player)
+        {
+            gameEngine.stopWorld();
+            var c=document.getElementById("gameCanvas");
+            var ctx=c.getContext("2d");
+            ctx.clearRect(0,0, c.width, c.height);
+            var ctx = document.getElementById("gameCanvas").getContext("2d");
+            ctx.font="40px Georgia";
+            ctx.fillStyle = 'white';
+            ctx.fillText("Game Over!",300,300);
+        }
     }
 
 });
