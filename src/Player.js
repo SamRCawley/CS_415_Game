@@ -4,6 +4,7 @@ var Player = Class.create(Entity, {
     _currY:500,
     scale:0.1,
     pSprite:null,
+    playerProjectile:["PlayerProjectile"],
 
     initialize: function($super, x,y) {
         $super(x,y);
@@ -32,5 +33,11 @@ var Player = Class.create(Entity, {
     },
     update:function($super){
             $super();
-            }
+//            if(Math.floor(Math.random() * 30) % 30 == 0 && this._body)  //1 in 30 chance * 60 frames per second = 2 per second
+//            {
+//                var proj = new window[this.playerProjectile[0]](this._currX, this._currY+this.pSprite.height);
+//                proj.moveSprite(0,500);
+//                gameEngine.Entities.push(proj);
+//            }
+    }
 });
