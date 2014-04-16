@@ -2,7 +2,7 @@ var PlayerProjectile = Class.create(Entity, {
     health:1,
     _currX:0,
     _currY:0,
-    scale:0.3,
+    scale:0.2,
     pSprite:null,
     initialize: function($super, x, y) {
             $super(x,y);
