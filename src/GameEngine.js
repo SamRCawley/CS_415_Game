@@ -60,6 +60,16 @@ var gameEngine = {
         window.clearInterval(this.updateLoop);
         window.clearInterval(this.entitySpawner);
         this.Entities = new Array();
+        document.getElementById("gameCanvas").removeEventListener('mousemove',gameEngine.onMouseMoved,false);
+        if(havePointerLock && gameEngine.pointerLocked){
+        document.exitPointerLock = document.exitPointerLock ||
+                       document.mozExitPointerLock ||
+                       document.webkitExitPointerLock;
+        document.exitPointerLock();
+        // Ask the browser to lock the pointer
+        gameEngine.pointerLocked = false;
+        }
+
     },
     spawnEntities:function(){
     var c=document.getElementById("gameCanvas");
@@ -115,15 +125,10 @@ var gameEngine = {
             else
                 this.Entities[i].update();
         }
+        gameEngine.Entities[0].moveSprite(0, 0);
     },
-    timeout:null,
-    prevMouseX:null,
-    prevMouseY:null,
     onMouseMoved:function(event)
     {
-       clearTimeout(gameEngine.timeout);
-       gameEngine.timeout = setTimeout(gameEngine.onMouseStop, 50);
-        //25 offsets the image so that the mouse is in the center of it
           var x = event.movementX ||
               event.mozMovementX          ||
               event.webkitMovementX       ||
@@ -132,17 +137,8 @@ var gameEngine = {
               event.mozMovementY      ||
               event.webkitMovementY   ||
               0;
-        if(this.prevMouseX && this.prevMouseY)
-        {
-            var sensitivity = 400; //higher is faster
-            gameEngine.Entities[0].moveSprite((x)*sensitivity, (y)*sensitivity);  //x and y are small due to mouse movement triggers
-        }
-        this.prevMouseX = x;
-        this.prevMouseY = y;
-    },
-    onMouseStop:function()
-    {
-        gameEngine.Entities[0].moveSprite(0, 0);
+        var sensitivity = 400; //higher is faster
+        gameEngine.Entities[0].moveSprite((x)*sensitivity, (y)*sensitivity);  //x and y are small due to mouse movement triggers
     },
     defineWalls:function()
     {
