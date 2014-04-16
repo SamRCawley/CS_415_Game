@@ -4,6 +4,7 @@ var Player = Class.create(Entity, {
     _currY:500,
     scale:0.1,
     pSprite:null,
+    fireTimer:null,
     playerProjectile:["PlayerProjectile"],
 
     initialize: function($super, x,y) {
@@ -28,16 +29,16 @@ var Player = Class.create(Entity, {
         fixDef.shape.SetAsBox((self.pSprite.width) / 2 /b2Unit, (self.pSprite.height) / 2 /b2Unit);
         self._body = gameEngine.world.CreateBody(bodyDef)
         self._body.CreateFixture(fixDef);
-
-
     },
     update:function($super){
-            $super();
-//            if(Math.floor(Math.random() * 30) % 30 == 0 && this._body)  //1 in 30 chance * 60 frames per second = 2 per second
-//            {
-//                var proj = new window[this.playerProjectile[0]](this._currX, this._currY+this.pSprite.height);
-//                proj.moveSprite(0,500);
-//                gameEngine.Entities.push(proj);
-//            }
+       $super();
+       var currentTime = new Date();
+       if(this.fireTimer == null || currentTime - this.fireTimer >= 500)  //1 shot every 0.5 seconds
+       {
+        this.fireTimer = currentTime
+        var proj = new window[this.playerProjectile[0]](this._currX, this._currY-this.pSprite.height/2-assets.img_PlayerProjectile.height/2); //have to modified on projectile side to adjust up for projectile sprite
+        proj.moveSprite(0,-500);
+        gameEngine.Entities.push(proj);
+        }
     }
 });

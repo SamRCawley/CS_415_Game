@@ -10,7 +10,6 @@ var Projectile = Class.create(Entity, {
             var self = this;
             self.pSprite.width = (self.pSprite.naturalWidth * self.scale);
             self.pSprite.height = (self.pSprite.naturalHeight * self.scale);
-
             var bodyDef = new b2BodyDef();
             bodyDef.type = b2Body.b2_dynamicBody;
             bodyDef.position.x = self._currX/b2Unit; //Note: Tutorials indicate position is based on center
