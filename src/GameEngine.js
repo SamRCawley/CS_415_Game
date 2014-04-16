@@ -125,7 +125,7 @@ var gameEngine = {
             else
                 this.Entities[i].update();
         }
-        gameEngine.Entities[0].moveSprite(0, 0);
+        //gameEngine.Entities[0].moveSprite(0, 0);
     },
     onMouseMoved:function(event)
     {
@@ -137,8 +137,9 @@ var gameEngine = {
               event.mozMovementY      ||
               event.webkitMovementY   ||
               0;
-        var sensitivity = 400; //higher is faster
-        gameEngine.Entities[0].moveSprite((x)*sensitivity, (y)*sensitivity);  //x and y are small due to mouse movement triggers
+        var sensitivity = 15; //higher is faster
+        var pBody = gameEngine.Entities[0]._body;
+        gameEngine.Entities[0].mouseJoint.SetTarget(new b2Vec2(pBody.GetPosition().x+x/b2Unit*sensitivity, pBody.GetPosition().y+y/b2Unit*sensitivity));  //x and y are small due to mouse movement triggers
     },
     defineWalls:function()
     {

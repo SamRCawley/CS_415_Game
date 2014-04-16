@@ -5,8 +5,8 @@ var Player = Class.create(Entity, {
     scale:0.1,
     pSprite:null,
     fireTimer:null,
+    mouseJoint:null,
     playerProjectile:["PlayerProjectile"],
-
     initialize: function($super, x,y) {
         $super(x,y);
         this.pSprite= assets.img_Player;
@@ -29,6 +29,14 @@ var Player = Class.create(Entity, {
         fixDef.shape.SetAsBox((self.pSprite.width) / 2 /b2Unit, (self.pSprite.height) / 2 /b2Unit);
         self._body = gameEngine.world.CreateBody(bodyDef)
         self._body.CreateFixture(fixDef);
+        this.mouseDef = new b2MouseJointDef();
+        this.mouseDef.bodyA = gameEngine.world.GetGroundBody();
+        this.mouseDef.bodyB = this._body;
+        this.mouseDef.target = this._body.GetPosition();
+        this.mouseDef.collideConnected = true;
+        this.mouseDef.maxForce = 1000 * this._body.GetMass();
+        this.mouseDef.dampingRatio = 0.9;
+        this.mouseJoint = gameEngine.world.CreateJoint(this.mouseDef);
     },
     update:function($super){
        $super();
