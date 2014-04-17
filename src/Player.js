@@ -60,7 +60,7 @@ var Player = Class.create(Entity, {
         var c=document.getElementById("gameCanvas");
         var ctx=c.getContext("2d");
         //var measurement = ctx.measureText(text);
-        ctx.clearRect(0,0, 400, 400);
+        //ctx.clearRect(0,0, 400, 400);
         ctx.font="50pt Georgia";
         if(this.health < 30)
             ctx.fillStyle = 'red';
