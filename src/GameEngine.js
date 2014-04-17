@@ -131,6 +131,7 @@ var gameEngine = {
         }
         //gameEngine.Entities[0].moveSprite(0, 0);
         this.Entities[0].displayHealth();
+        this.Entities[0].displayScore();
     },
     onMouseMoved:function(event)
     {

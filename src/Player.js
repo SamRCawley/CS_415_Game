@@ -1,5 +1,6 @@
 var Player = Class.create(Entity, {
     health:100,
+    score: 0,
     _currX:400,
     _currY:500,
     scale:0.1,
@@ -54,7 +55,10 @@ var Player = Class.create(Entity, {
      {
         this.health-=damage;
      },
-
+     increaseScore:function(points)
+     {
+        this.score+=points;
+     },
      displayHealth:function()
      {
         var c=document.getElementById("gameCanvas");
@@ -67,5 +71,15 @@ var Player = Class.create(Entity, {
         else
             ctx.fillStyle = 'green';
         ctx.fillText("" + this.health + "/100",c.width-270,c.height-40);
+     },
+     displayScore:function()
+     {
+        var c=document.getElementById("gameCanvas");
+        var ctx=c.getContext("2d");
+        //var measurement = ctx.measureText(text);
+        //ctx.clearRect(0,0, 400, 400);
+        ctx.font="50pt Georgia";
+        ctx.fillText("" + this.score,0,c.height-40);
      }
+
 });
