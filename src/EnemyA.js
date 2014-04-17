@@ -25,7 +25,7 @@ var EnemyA = Class.create(Entity, {
             fixDef.filter.categoryBits = categories.bird;
             fixDef.filter.maskBits = ~categories.wall;
             // half width, half height.
-            fixDef.shape.SetAsBox((self.pSprite.width) / 2 /b2Unit, (self.pSprite.height) / 2 /b2Unit);
+            fixDef.shape.SetAsBox((self.pSprite.width)*0.8 / 2 /b2Unit, (self.pSprite.height)*0.8 / 2 /b2Unit);
             self._body = gameEngine.world.CreateBody(bodyDef)
             self._body.CreateFixture(fixDef);
 
