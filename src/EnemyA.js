@@ -28,6 +28,8 @@ var EnemyA = Class.create(Entity, {
             fixDef.shape.SetAsBox((self.pSprite.width) / 2 /b2Unit, (self.pSprite.height) / 2 /b2Unit);
             self._body = gameEngine.world.CreateBody(bodyDef)
             self._body.CreateFixture(fixDef);
+
+            this.moveSprite(Math.floor(Math.random() * 60) % 60,Math.floor(Math.random() * 60) % 60);
     },
 
     update:function($super){
