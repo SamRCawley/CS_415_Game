@@ -1,5 +1,5 @@
 var Player = Class.create(Entity, {
-    health:1,
+    health:100,
     _currX:400,
     _currY:500,
     scale:0.1,
@@ -48,5 +48,24 @@ var Player = Class.create(Entity, {
         proj.moveSprite(0,-500);
         gameEngine.Entities.push(proj);
         }
-    }
+     },
+
+     takeDamage:function(damage)
+     {
+        this.health-=damage;
+     },
+
+     displayHealth:function()
+     {
+        var c=document.getElementById("gameCanvas");
+        var ctx=c.getContext("2d");
+        //var measurement = ctx.measureText(text);
+        ctx.clearRect(0,0, 400, 400);
+        ctx.font="50pt Georgia";
+        if(this.health < 30)
+            ctx.fillStyle = 'red';
+        else
+            ctx.fillStyle = 'green';
+        ctx.fillText("" + this.health + "/100",c.width-130,c.height-40);
+     }
 });

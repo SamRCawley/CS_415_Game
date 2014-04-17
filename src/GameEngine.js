@@ -126,6 +126,7 @@ var gameEngine = {
                 this.Entities[i].update();
         }
         //gameEngine.Entities[0].moveSprite(0, 0);
+        this.Entities[0].displayHealth();
     },
     onMouseMoved:function(event)
     {

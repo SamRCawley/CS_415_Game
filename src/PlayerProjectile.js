@@ -54,7 +54,9 @@ var PlayerProjectile = Class.create(Entity, {
         if(ent)
         {
             ent._removeTrigger = true; //change to damage in future update
+            this._removeTrigger = true;
         }
+
     }
 
 });
