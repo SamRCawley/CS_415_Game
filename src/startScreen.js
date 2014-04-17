@@ -1,16 +1,33 @@
 var start = {
-    centerTxt:function(ctx, text, y) {
-            ctx.font = '70pt Comic Sans MS Bold';
-            //var measurement = ctx.measureText(text);
-            ctx.textBaseline="middle";
-            ctx.textAlign="center";
-            var gradient=ctx.createLinearGradient(0,y-35,0,y+35);
-            gradient.addColorStop("0","blue");
-            gradient.addColorStop("0.5","lightskyblue");
-            gradient.addColorStop("1.0","white");
-            ctx.fillStyle = gradient;
-            var x = ctx.canvas.width / 2;
-            ctx.fillText(text, x, y);
+    drawBackground:function(ctx){
+    canvas = document.getElementById('gameCanvas');
+            bgPath='./res/Normal/skybackground.png';
+            bg = new Image();
+            bg.src = bgPath;
+            bg.onload=function(){
+            ctx=canvas.getContext('2d');
+            ctx.drawImage(bg, 0, 0);
+            var y = (ctx.canvas.height) / 2;
+            start.centerTxt(ctx);
+            y = (ctx.canvas.height - img.height)/2;
+            x=(ctx.canvas.width - img.width) / 2;
+            ctx.drawImage(img, x, y);
+            }
+
+    },
+    centerTxt:function(ctx) {
+            y = 50;
+
+            canvas = document.getElementById('gameCanvas');
+                    titlePath='./res/Normal/title.png';
+                    title = new Image();
+                    title.src = titlePath;
+                    title.onload=function(){
+                    var x = (ctx.canvas.width - title.width)/ 2;
+                    ctx.drawImage(title, x, y);
+                    }
+
+
     },
     startScreen:function(){
         canvas = document.getElementById('gameCanvas');
@@ -19,12 +36,8 @@ var start = {
         img.src = imgPath;
         img.onload=function(){
             ctx=canvas.getContext('2d');
-            var y = ctx.canvas.height / 2;
-            title='Neko Pew Pew!';
+            start.drawBackground(ctx);
 
-            start.centerTxt(ctx, title, y);
-            x=(ctx.canvas.width - img.width) / 2;
-            ctx.drawImage(img, x, y);
         }
         //alert(canvas.width);
         //alert(canvas.height);

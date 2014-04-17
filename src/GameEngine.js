@@ -4,6 +4,7 @@ var havePointerLock = 'pointerLockElement' in document ||
 
 var gameEngine = {
     updateLoop:null,
+    background:null,
     world:null,
     contactListener:null,
     Entities:null,
@@ -44,6 +45,7 @@ var gameEngine = {
         this.contactListener.PreSolve = function(contact, oldManifold) {
              };
         this.world.SetContactListener(this.contactListener);
+
         this.Entities = new Array(); /*an array of the entities may or may not be useful*/
         var c=document.getElementById("gameCanvas");
         var ctx=c.getContext("2d");
@@ -54,6 +56,7 @@ var gameEngine = {
         this.entitySpawner = setInterval(function(){self.spawnEntities();}, 2000);
          /*add additional world setup stuff*/
          /*this.stopWorld();*/
+
     },
     stopWorld:function()
     {
@@ -99,9 +102,10 @@ var gameEngine = {
          }
     },
     update:function(dt){
+
         var c=document.getElementById("gameCanvas");
         var ctx=c.getContext("2d");
-        ctx.clearRect(0,0, c.width, c.height);
+      ctx.clearRect(0,0, c.width, c.height);
       this.world.Step(dt, 10, 10);
       this.world.ClearForces();
         var nextBody = this.world.GetBodyList();

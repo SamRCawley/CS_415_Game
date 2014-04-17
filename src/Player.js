@@ -66,6 +66,6 @@ var Player = Class.create(Entity, {
             ctx.fillStyle = 'red';
         else
             ctx.fillStyle = 'green';
-        ctx.fillText("" + this.health + "/100",c.width-130,c.height-40);
+        ctx.fillText("" + this.health + "/100",c.width-270,c.height-40);
      }
 });
