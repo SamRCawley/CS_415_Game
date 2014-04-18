@@ -3,7 +3,6 @@ var havePointerLock = 'pointerLockElement' in document ||
     'webkitPointerLockElement' in document;
 
 var gameEngine = {
-    updateLoop:null,
     background:null,
     world:null,
     contactListener:null,
@@ -14,20 +13,40 @@ var gameEngine = {
     entitySpawner:null,
     pointerLocked:false,
     vy:0,
+    worldPaused:false,
+    worldStopped:true,
+    gameOver:true,
     setup:function(){
         document.getElementById("gameCanvas").addEventListener('click', gameEngine.onCanvasClick, false);
+        document.addEventListener('pointerlockchange', gameEngine.pointerLockChange, false);
+        document.addEventListener('mozpointerlockchange', gameEngine.pointerLockChange, false);
+        document.addEventListener('webkitpointerlockchange', gameEngine.pointerLockChange, false);
         assets.loadAssets();
         start.startScreen();
     },
+    pointerLockChange:function() {
+      if (document.mozPointerLockElement === document.getElementById('gameCanvas') ||
+          document.webkitPointerLockElement === document.getElementById('gameCanvas')) {
+        if(this.worldPaused)
+            gameEngine.unPauseWorld();
+        else
+            gameEngine.startWorld();
+
+      } else {
+        gameEngine.pauseWorld();
+      }
+    },
     startWorld:function()
     {
-
+        this.gameOver = false;
+        this.worldPaused = false;
+        this.worldStopped = false;
         document.getElementById("gameCanvas").addEventListener('mousemove',gameEngine.onMouseMoved,false);
         document.getElementById("gameCanvas").style.cursor = "none";
         this.world = new b2World(new b2Vec2(0, 0), false);
         this.defineWalls();
         var self = this;
-        this.updateLoop = setInterval(function(){self.update(1.0/60.0);}, 1000/60); /*updates ~60 times per second*/
+
         this.contactListener = new Box2D.Dynamics.b2ContactListener;
         this.contactListener.BeginContact = function(contact) {
             var entA = contact.GetFixtureA().GetBody().GetUserData();
@@ -57,13 +76,15 @@ var gameEngine = {
         this.entitySpawner = setInterval(function(){self.spawnEntities();}, 2000);
          /*add additional world setup stuff*/
          /*this.stopWorld();*/
+        gameEngine.update();
 
     },
     stopWorld:function()
     {
-        window.clearInterval(this.updateLoop);
+        this.worldStopped=true;
+        //window.clearInterval(this.updateLoop);
         window.clearInterval(this.entitySpawner);
-        this.Entities = new Array();
+        //this.Entities = new Array();
         document.getElementById("gameCanvas").removeEventListener('mousemove',gameEngine.onMouseMoved,false);
         if(havePointerLock && gameEngine.pointerLocked){
         document.exitPointerLock = document.exitPointerLock ||
@@ -74,6 +95,17 @@ var gameEngine = {
         gameEngine.pointerLocked = false;
         }
 
+    },
+    pauseWorld:function()
+    {
+        this.worldPaused = true;
+        window.clearInterval(this.entitySpawner);
+    },
+    unPauseWorld:function()
+    {
+        this.worldPaused = false;
+        this.entitySpawner = setInterval(function(){self.spawnEntities();}, 2000);
+        gameEngine.update();
     },
     spawnEntities:function(){
     var c=document.getElementById("gameCanvas");
@@ -102,8 +134,10 @@ var gameEngine = {
              this.Entities.push(newEnt);
          }
     },
-    update:function(dt){
-
+    prevUpdate:new Date(),
+    update:function(){
+        var dt = (new Date()-this.prevUpdate)/1000;
+        this.prevUpdate = new Date();
         var c=document.getElementById("gameCanvas");
         var ctx=c.getContext("2d");
         ctx.clearRect(0,0, c.width, c.height);
@@ -134,6 +168,26 @@ var gameEngine = {
         //gameEngine.Entities[0].moveSprite(0, 0);
         this.Entities[0].displayHealth();
         this.Entities[0].displayScore();
+        if(this.gameOver)
+        {
+            var c=document.getElementById("gameCanvas");
+            var ctx=c.getContext("2d");
+            //var measurement = ctx.measureText(text);
+            ctx.textBaseline="middle";
+            ctx.textAlign="center";
+            var y = 300
+            var gradient=ctx.createLinearGradient(0,y-40,0,y+40);
+            gradient.addColorStop("0","blue");
+            gradient.addColorStop("0.5","lightskyblue");
+            gradient.addColorStop("1.0","white");
+            ctx.clearRect(0,0, c.width, c.height);
+            var ctx = document.getElementById("gameCanvas").getContext("2d");
+            ctx.font="50pt Georgia";
+            ctx.fillStyle = gradient;
+            ctx.fillText("Game Over!",c.width/2,y);
+        }
+        if(!(this.worldPaused || this.worldStopped))
+            setTimeout(function(){gameEngine.update()}, 1000/80);  //delay as if 80 frames per second
     },
     onMouseMoved:function(event)
     {
@@ -243,10 +297,10 @@ var gameEngine = {
         var c = document.getElementById("gameCanvas");
         var ctx = c.getContext('2d');
         ctx.drawImage(bg1,0,this.vy);
-        ctx.drawImage(bg1,0,bg1.height-Math.abs(this.vy));
+        ctx.drawImage(bg1,0,this.vy-bg1.height);
         if(Math.abs(this.vy) > bg1.height)
             this.vy = 0;
-        this.vy-=2;
+        this.vy+=2;
 
     }
 };

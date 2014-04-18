@@ -63,23 +63,29 @@ var Player = Class.create(Entity, {
      {
         var c=document.getElementById("gameCanvas");
         var ctx=c.getContext("2d");
-        //var measurement = ctx.measureText(text);
+        ctx.textBaseline="bottom";
+        ctx.textAlign="right";
+
         //ctx.clearRect(0,0, 400, 400);
         ctx.font="50pt Georgia";
         if(this.health < 30)
             ctx.fillStyle = 'red';
         else
             ctx.fillStyle = 'green';
-        ctx.fillText("" + this.health + "/100",c.width-270,c.height-40);
+        var measurement = ctx.measureText("" + this.health + "/100");
+        ctx.fillText("" + this.health + "/100",c.width,c.height);
      },
      displayScore:function()
      {
         var c=document.getElementById("gameCanvas");
         var ctx=c.getContext("2d");
+        ctx.textBaseline="bottom";
+        ctx.textAlign="left";
         //var measurement = ctx.measureText(text);
         //ctx.clearRect(0,0, 400, 400);
         ctx.font="50pt Georgia";
-        ctx.fillText("" + this.score,20,c.height-40);
+        var measurement = ctx.measureText("" + this.score);
+        ctx.fillText("" + this.score,0,c.height);
      }
 
 });

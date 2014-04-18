@@ -110,7 +110,7 @@ var Entity = Class.create({
                 ctx.fillText("Game Over!",c.width/2,y);
             }
         }
-            ent.takeDamage(100);
+            //ent.takeDamage(100);
     }
 
 });
