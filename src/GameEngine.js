@@ -13,6 +13,7 @@ var gameEngine = {
     timeout:null,
     entitySpawner:null,
     pointerLocked:false,
+    vy:0,
     setup:function(){
         document.getElementById("gameCanvas").addEventListener('click', gameEngine.onCanvasClick, false);
         assets.loadAssets();
@@ -105,9 +106,10 @@ var gameEngine = {
 
         var c=document.getElementById("gameCanvas");
         var ctx=c.getContext("2d");
-      ctx.clearRect(0,0, c.width, c.height);
-      this.world.Step(dt, 10, 10);
-      this.world.ClearForces();
+        ctx.clearRect(0,0, c.width, c.height);
+        this.moveBackground();
+        this.world.Step(dt, 10, 10);
+        this.world.ClearForces();
         var nextBody = this.world.GetBodyList();
         while(nextBody)
         {
@@ -225,6 +227,26 @@ var gameEngine = {
         gameEngine.pointerLocked = false;
         gameEngine.stopWorld();
         }
+
+    },
+    moveBackground:function()
+    {
+        var bg1;
+        if(this.Entities[0].score > 900 && this.Entities[0].score < 2000)
+            bg1 = assets.img_background2;
+        else if(this.Entities[0].score > 1900 && this.Entities[0].score < 3000)
+            bg1 = assets.img_background3;
+        else if(this.Entities[0].score > 2900)
+            bg1 = assets.img_background4;
+        else
+            bg1 = assets.img_background1;
+        var c = document.getElementById("gameCanvas");
+        var ctx = c.getContext('2d');
+        ctx.drawImage(bg1,0,this.vy);
+        ctx.drawImage(bg1,0,bg1.height-Math.abs(this.vy));
+        if(Math.abs(this.vy) > bg1.height)
+            this.vy = 0;
+        this.vy-=2;
 
     }
 };

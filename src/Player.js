@@ -79,7 +79,7 @@ var Player = Class.create(Entity, {
         //var measurement = ctx.measureText(text);
         //ctx.clearRect(0,0, 400, 400);
         ctx.font="50pt Georgia";
-        ctx.fillText("" + this.score,0,c.height-40);
+        ctx.fillText("" + this.score,20,c.height-40);
      }
 
 });
