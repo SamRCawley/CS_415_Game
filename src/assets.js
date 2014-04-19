@@ -1,4 +1,4 @@
-var s_Player = './res/Normal/nekopewpew3.jpg';
+var s_Player = './res/Normal/NekoSprite.png';
 var s_EnemyA = './res/Normal/birdenemy.png';
 var s_Projectile = './res/Normal/redLaser.png';
 var s_PlayerProjectile = './res/Normal/greenLaser.png';
