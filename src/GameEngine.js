@@ -106,6 +106,7 @@ var gameEngine = {
     },
     unPauseWorld:function()
     {
+        this.prevUpdate = new Date();
         var self = this;
         this.worldPaused = false;
         this.entitySpawner = setInterval(function(){self.spawnEntities();}, 2000);
