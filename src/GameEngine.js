@@ -27,12 +27,14 @@ var gameEngine = {
     pointerLockChange:function() {
       if (document.mozPointerLockElement === document.getElementById('gameCanvas') ||
           document.webkitPointerLockElement === document.getElementById('gameCanvas')) {
-        if(gameEngine.worldPaused)
-            gameEngine.unPauseWorld();
-        else
+          gameEngine.pointerLocked = true;
+        if(gameEngine.worldStopped)
             gameEngine.startWorld();
+        else
+            gameEngine.unPauseWorld();
 
       } else {
+       gameEngine.pointerLocked = false;
         gameEngine.pauseWorld();
       }
     },
