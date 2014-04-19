@@ -27,7 +27,7 @@ var gameEngine = {
     pointerLockChange:function() {
       if (document.mozPointerLockElement === document.getElementById('gameCanvas') ||
           document.webkitPointerLockElement === document.getElementById('gameCanvas')) {
-        if(this.worldPaused)
+        if(gameEngine.worldPaused)
             gameEngine.unPauseWorld();
         else
             gameEngine.startWorld();
@@ -38,6 +38,7 @@ var gameEngine = {
     },
     startWorld:function()
     {
+        this.prevUpdate = new Date();
         this.gameOver = false;
         this.worldPaused = false;
         this.worldStopped = false;
@@ -279,7 +280,7 @@ var gameEngine = {
         document.exitPointerLock();
         // Ask the browser to lock the pointer
         gameEngine.pointerLocked = false;
-        gameEngine.stopWorld();
+        //gameEngine.stopWorld();
         }
 
     },
