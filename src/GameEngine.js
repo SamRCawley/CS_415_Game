@@ -270,7 +270,7 @@ var gameEngine = {
         // Ask the browser to lock the pointer
         element.requestPointerLock();
         gameEngine.pointerLocked = true;
-        gameEngine.startWorld();
+        //gameEngine.startWorld();
         }
      else if(havePointerLock && gameEngine.pointerLocked){
         document.exitPointerLock = document.exitPointerLock ||
