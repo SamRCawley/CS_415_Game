@@ -110,7 +110,7 @@ var gameEngine = {
         var self = this;
         this.worldPaused = false;
         this.entitySpawner = setInterval(function(){self.spawnEntities();}, 2000);
-        gameEngine.update();
+        setTimeout(function(){gameEngine.update()}, 1000/80);
     },
     spawnEntities:function(){
     var c=document.getElementById("gameCanvas");
@@ -138,10 +138,16 @@ var gameEngine = {
              var newEnt = new window[this.entityTypes[0]](c.width*3/4,20);
              this.Entities.push(newEnt);
          }
+       if(Math.floor(Math.random()*25%24) == 0)
+         {
+            var newWall = new window["wall"](c.width*1/2, 20);
+            newWall.moveSprite(0, 200);
+            this.Entities.push(newWall);
+         }
     },
     prevUpdate:new Date(),
     update:function(){
-        var dt = (new Date()-this.prevUpdate)/1000;
+        var dt = (new Date()-this.prevUpdate)/1000.0;
         this.prevUpdate = new Date();
         var c=document.getElementById("gameCanvas");
         var ctx=c.getContext("2d");

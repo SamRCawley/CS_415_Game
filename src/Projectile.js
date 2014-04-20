@@ -51,10 +51,10 @@ var Projectile = Class.create(Entity, {
         }
     },
     onCollide:function(ent){
+        this._removeTrigger = true;
         if(ent instanceof Player)
         {
             ent.takeDamage(10);
-            this._removeTrigger = true;
             if(ent.health == 0)
             {
                 gameEngine.stopWorld();

@@ -20,8 +20,9 @@ var b2Vec2 = Box2D.Common.Math.b2Vec2
     bird:0x0002,
     player:0x0004,
     wall:0x0008,
-    playerBarrier:0x000F
- }
+    playerBarrier:0x000F,
+    plane:0x0020
+ };
 
 var Entity = Class.create({
     health:1,

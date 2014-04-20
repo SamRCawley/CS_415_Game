@@ -6,6 +6,7 @@ var s_background1 = './res/Normal/skybackground.png';
 var s_background2 = './res/Normal/skybackground2.png';
 var s_background3 = './res/Normal/skybackground3.png';
 var s_background4 = './res/Normal/skybackground4.png';
+var s_plane = './res/Normal/Plane.png'
 
 var assets = {
     img_Player:new Image(),
@@ -16,6 +17,7 @@ var assets = {
     img_background2:new Image(),
     img_background3:new Image(),
     img_background4:new Image(),
+    img_plane:new Image(),
     loadAssets:function()
     {
         this.img_Player.src=(s_Player);
@@ -26,5 +28,6 @@ var assets = {
         this.img_background2.src=(s_background2);
         this.img_background3.src=(s_background3);
         this.img_background4.src=(s_background4);
+        this.img_plane.src=(s_plane);
     }
 };
