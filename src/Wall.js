@@ -37,7 +37,8 @@ var wall = Class.create(Entity, {
                 this._removeTrigger = true;
         }
     },
-    onCollide:function(ent){
+    onCollide:function($super, ent){
+        $super(ent);
         if(!(ent instanceof Player))
         {
             ent._removeTrigger = true;
