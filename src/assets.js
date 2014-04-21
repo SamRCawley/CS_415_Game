@@ -6,7 +6,11 @@ var s_background1 = './res/Normal/skybackground.png';
 var s_background2 = './res/Normal/skybackground2.png';
 var s_background3 = './res/Normal/skybackground3.png';
 var s_background4 = './res/Normal/skybackground4.png';
-var s_plane = './res/Normal/Plane.png'
+var s_plane = './res/Normal/Plane.png';
+var s_ScatterShot = './res/Normal/scattershot.png';
+var s_ScatterMod = './res/Normal/scattershotmod.png';
+var s_HealthMod = './res/Normal/healthmod.png';
+var s_doubleLaserMod = './res/Normal/doublelasermod.png';
 
 var assets = {
     img_Player:new Image(),
@@ -18,6 +22,11 @@ var assets = {
     img_background3:new Image(),
     img_background4:new Image(),
     img_plane:new Image(),
+    img_scatterShot:new Image(),
+    img_scatterMod:new Image(),
+    img_healthmod:new Image(),
+    img_doubleLaserMod:new Image(),
+
     loadAssets:function()
     {
         this.img_Player.src=(s_Player);
@@ -29,5 +38,10 @@ var assets = {
         this.img_background3.src=(s_background3);
         this.img_background4.src=(s_background4);
         this.img_plane.src=(s_plane);
+        this.img_scatterShot.src=(s_ScatterMod);
+        this.img_scatterMod.src=(s_ScatterMod);
+        this.img_healthmod.src=(s_HealthMod);
+        this.img_doubleLaserMod.src=(s_doubleLaserMod);
+
     }
 };
