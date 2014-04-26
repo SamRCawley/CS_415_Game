@@ -16,6 +16,7 @@ var gameEngine = {
     worldPaused:false,
     worldStopped:true,
     gameOver:true,
+    runTime:0,
     setup:function(){
         document.getElementById("gameCanvas").addEventListener('click', gameEngine.onCanvasClick, false);
         document.addEventListener('pointerlockchange', gameEngine.pointerLockChange, false);
@@ -40,6 +41,7 @@ var gameEngine = {
     },
     startWorld:function()
     {
+        this.runTime=0;
         this.prevUpdate = new Date();
         this.gameOver = false;
         this.worldPaused = false;
@@ -109,36 +111,37 @@ var gameEngine = {
         this.prevUpdate = new Date();
         var self = this;
         this.worldPaused = false;
-        this.entitySpawner = setInterval(function(){self.spawnEntities();}, 2000);
+        this.entitySpawner = setInterval(function(){self.spawnEntities();}, 250);
         setTimeout(function(){gameEngine.update()}, 1000/80);
     },
     spawnEntities:function(){
     var c=document.getElementById("gameCanvas");
-    if(parseInt(Math.random()*10%2) == 0){  //MIDDLE SPAWN POINT
+    var timeMulti = 70*Math.pow(this.runTime, 1/4)-1;
+    if(Math.floor(Math.random()*timeMulti) > 90){  //MIDDLE SPAWN POINT
         var newEnt = new window[this.entityTypes[0]](c.width/2,20);
         this.Entities.push(newEnt);
         }
-       if(Math.floor(Math.random()*10%3) == 0)  //LEFT SPAWN POINT
+       if(Math.floor(Math.random()*timeMulti) > 90)  //LEFT SPAWN POINT
        {
            var newEnt = new window[this.entityTypes[0]](20,20);
            this.Entities.push(newEnt);
        }
-       if(Math.floor(Math.random()*10%3) == 0) //RIGHT SPAWN POINT
+       if(Math.floor(Math.random()*timeMulti) > 90)  //RIGHT SPAWN POINT
        {
            var newEnt = new window[this.entityTypes[0]](900,20);
            this.Entities.push(newEnt);
        }
-       if(Math.floor(Math.random()*10%7) == 0) //LEFT-MIDDLE SPAWN POINT
+       if(Math.floor(Math.random()*timeMulti) > 90)//LEFT-MIDDLE SPAWN POINT
           {
               var newEnt = new window[this.entityTypes[0]](c.width/4,20);
               this.Entities.push(newEnt);
           }
-       if(Math.floor(Math.random()*10%7) == 0) //RIGHT-MIDDLE SPAWN POINT
+       if(Math.floor(Math.random()*timeMulti) > 90) //RIGHT-MIDDLE SPAWN POINT
          {
              var newEnt = new window[this.entityTypes[0]](c.width*3/4,20);
              this.Entities.push(newEnt);
          }
-       if(Math.floor(Math.random()*25%24) == 0)
+       if(Math.floor(Math.random()*100 > 95))
          {
             var newWall = new window["wall"](c.width*1/2, 20);
             newWall.moveSprite(0, 200);
@@ -148,6 +151,7 @@ var gameEngine = {
     prevUpdate:new Date(),
     update:function(){
         var dt = (new Date()-this.prevUpdate)/1000.0;
+        this.runTime += dt;
         this.prevUpdate = new Date();
         var c=document.getElementById("gameCanvas");
         var ctx=c.getContext("2d");
@@ -296,7 +300,22 @@ var gameEngine = {
     },
     moveBackground:function()
     {
-        var bg1;
+        var progressPercent = 1<this.Entities[0].score/2900?1:this.Entities[0].score/2900;
+        var dProgress = progressPercent*2<1?progressPercent*2:1;
+        var c = document.getElementById("gameCanvas");
+        var ctx = c.getContext('2d');
+        var gradient=ctx.createLinearGradient(0,0,0,c.height);
+        var firstColor = "rgb("+parseInt(50+145*dProgress)+",50,"+parseInt(255-205*progressPercent)+")";
+        gradient.addColorStop("0", firstColor);
+        var secondColor = "rgb("+parseInt(50+145*dProgress)+",150,"+parseInt(255-105*dProgress)+")";
+        gradient.addColorStop("0.5",secondColor);
+        var thirdColor = "rgb(255,"+parseInt(255-205*progressPercent)+","+parseInt(255-205*progressPercent)+")";
+        gradient.addColorStop("1.0",thirdColor);
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0,0,c.width, c.height);
+        ctx.fillStyle = "rgba(0,0,0,"+progressPercent+")";
+        ctx.fillRect(0,0,c.width, c.height);
+        /*var bg1;
         if(this.Entities[0].score > 900 && this.Entities[0].score < 2000)
             bg1 = assets.img_background2;
         else if(this.Entities[0].score > 1900 && this.Entities[0].score < 3000)
@@ -305,13 +324,13 @@ var gameEngine = {
             bg1 = assets.img_background4;
         else
             bg1 = assets.img_background1;
-        var c = document.getElementById("gameCanvas");
-        var ctx = c.getContext('2d');
+
+
         ctx.drawImage(bg1,0,this.vy);
         ctx.drawImage(bg1,0,this.vy-bg1.height);
         if(Math.abs(this.vy) > bg1.height)
             this.vy = 0;
-        this.vy+=2;
+        this.vy+=2;*/
 
     }
 };
