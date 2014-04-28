@@ -11,6 +11,9 @@ var s_ScatterShot = './res/Normal/scattershot.png';
 var s_ScatterMod = './res/Normal/scattershotmod.png';
 var s_HealthMod = './res/Normal/healthmod.png';
 var s_doubleLaserMod = './res/Normal/doublelasermod.png';
+var s_shieldMod = './res/Normal/shieldmod.png';
+var s_shieldSprite = "./res/Normal/NekoShieldSprite.png";
+
 
 var assets = {
     img_Player:new Image(),
@@ -26,6 +29,8 @@ var assets = {
     img_scatterMod:new Image(),
     img_healthmod:new Image(),
     img_doubleLaserMod:new Image(),
+    img_shieldMod:new Image(),
+    img_shieldSprite:new Image(),
 
     loadAssets:function()
     {
@@ -42,6 +47,8 @@ var assets = {
         this.img_scatterMod.src=(s_ScatterMod);
         this.img_healthmod.src=(s_HealthMod);
         this.img_doubleLaserMod.src=(s_doubleLaserMod);
+        this.img_shieldMod.src=(s_shieldMod);
+        this.img_shieldSprite.src=(s_shieldSprite);
 
     }
 };
