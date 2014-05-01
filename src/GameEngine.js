@@ -8,7 +8,7 @@ var gameEngine = {
     contactListener:null,
     Entities:null,
     player:null,
-    entityTypes:['EnemyA','Projectile'], //Added projectile
+    entityTypes:['EnemyA','ScatterShotMod'],
     timeout:null,
     entitySpawner:null,
     pointerLocked:false,
@@ -146,6 +146,11 @@ var gameEngine = {
             var newWall = new window["wall"](c.width*1/2, 20);
             newWall.moveSprite(0, 200);
             this.Entities.push(newWall);
+         }
+       if(Math.floor(Math.random()*100 > 50))
+         {
+            var newEnt = new window[this.entityTypes[1]](c.width*3/4, 20);
+            this.Entities.push(newEnt);
          }
     },
     prevUpdate:new Date(),

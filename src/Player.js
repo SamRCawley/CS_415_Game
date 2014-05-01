@@ -7,7 +7,7 @@ var Player = Class.create(Entity, {
     pSprite:null,
     fireTimer:null,
     mouseJoint:null,
-    playerProjectile:["PlayerProjectile"],
+    playerProjectile:["PlayerProjectile","ScatterLeft","ScatterCenter","ScatterRight"],
     initialize: function($super, x,y) {
         $super(x,y);
         this.pSprite= assets.img_Player;
@@ -44,11 +44,11 @@ var Player = Class.create(Entity, {
        var currentTime = new Date();
        if(this.fireTimer == null || currentTime - this.fireTimer >= 500)  //1 shot every 0.5 seconds
        {
-        this.fireTimer = currentTime
-        var proj = new window[this.playerProjectile[0]](this._currX, this._currY-this.pSprite.height/2-assets.img_PlayerProjectile.height/2); //have to modified on projectile side to adjust up for projectile sprite
-        proj.moveSprite(0,-500);
-        gameEngine.Entities.push(proj);
-        }
+         this.fireTimer = currentTime
+         var proj = new window[this.playerProjectile[0]](this._currX, this._currY-this.pSprite.height/2-assets.img_PlayerProjectile.height/2); //have to modified on projectile side to adjust up for projectile sprite
+         proj.moveSprite(0,-500);
+         gameEngine.Entities.push(proj);
+       }
      },
 
      takeDamage:function(damage)
@@ -58,10 +58,12 @@ var Player = Class.create(Entity, {
         else
             this.health-=damage;
      },
+
      increaseScore:function(points)
      {
         this.score+=points;
      },
+
      displayHealth:function()
      {
         var c=document.getElementById("gameCanvas");
@@ -78,6 +80,7 @@ var Player = Class.create(Entity, {
         var measurement = ctx.measureText("" + this.health + "/100");
         ctx.fillText("" + this.health + "/100",c.width,c.height);
      },
+
      displayScore:function()
      {
         var c=document.getElementById("gameCanvas");
@@ -89,6 +92,23 @@ var Player = Class.create(Entity, {
         ctx.font="50pt Georgia";
         var measurement = ctx.measureText("" + this.score);
         ctx.fillText("" + this.score,0,c.height);
-     }
+     },
+
+     onCollide:function($super, ent){
+             $super(ent);
+             if(ent instanceof ScatterShotMod)
+             {
+                 ent._removeTrigger = true;
+                 var proj = new window[this.playerProjectile[1]](this._currX, this._currY-this.pSprite.height/2-assets.img_scatterProjectile.height/2); //have to modified on projectile side to adjust up for projectile sprite
+                 proj.moveSprite(0,-500);
+                 gameEngine.Entities.push(proj);
+                 var proj = new window[this.playerProjectile[2]](this._currX, this._currY-this.pSprite.height/2-assets.img_scatterProjectile.height/2); //have to modified on projectile side to adjust up for projectile sprite
+                 proj.moveSprite(0,-500);
+                 gameEngine.Entities.push(proj);
+                 var proj = new window[this.playerProjectile[3]](this._currX, this._currY-this.pSprite.height/2-assets.img_scatterProjectile.height/2); //have to modified on projectile side to adjust up for projectile sprite
+                 proj.moveSprite(0,-500);
+                 gameEngine.Entities.push(proj);
+             }
+         }
 
 });
