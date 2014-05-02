@@ -21,7 +21,8 @@ var b2Vec2 = Box2D.Common.Math.b2Vec2
     player:0x0004,
     wall:0x0008,
     playerBarrier:0x000F,
-    plane:0x0020
+    plane:0x0020,
+    mods:0x0040
  };
 
 var Entity = Class.create({
@@ -112,6 +113,10 @@ var Entity = Class.create({
             }
         }
             //ent.takeDamage(100);
+    },
+
+    onRemove:function()
+    {
     }
 
 });

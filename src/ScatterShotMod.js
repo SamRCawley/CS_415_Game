@@ -22,7 +22,7 @@ var ScatterShotMod = Class.create(Entity, {
             fixDef.restitution = 0.8;
             fixDef.shape = new b2PolygonShape();
             fixDef.filter.categoryBits = categories.mods;
-            fixDef.filter.maskBits = ~(categories.wall|categories.projectile|categories.plane);
+            fixDef.filter.maskBits = ~(categories.wall|categories.projectile|categories.plane|categories.bird);
             // half width, half height.
             fixDef.shape.SetAsBox((self.pSprite.width) / 2 /b2Unit, (self.pSprite.height) / 2 /b2Unit);
             self._body = gameEngine.world.CreateBody(bodyDef)
@@ -44,7 +44,8 @@ var ScatterShotMod = Class.create(Entity, {
         this._removeTrigger = true;
         if(ent instanceof Player)
         {
-
+            ent.playerProjectile = ["ScatterLeft","ScatterCenter","ScatterRight"];
+            this._removeTrigger = true;
         }
     }
 

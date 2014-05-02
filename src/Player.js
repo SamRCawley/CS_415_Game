@@ -7,7 +7,7 @@ var Player = Class.create(Entity, {
     pSprite:null,
     fireTimer:null,
     mouseJoint:null,
-    playerProjectile:["PlayerProjectile","ScatterLeft","ScatterCenter","ScatterRight"],
+    playerProjectile:["PlayerProjectile"],
     initialize: function($super, x,y) {
         $super(x,y);
         this.pSprite= assets.img_Player;
@@ -45,9 +45,12 @@ var Player = Class.create(Entity, {
        if(this.fireTimer == null || currentTime - this.fireTimer >= 500)  //1 shot every 0.5 seconds
        {
          this.fireTimer = currentTime
-         var proj = new window[this.playerProjectile[0]](this._currX, this._currY-this.pSprite.height/2-assets.img_PlayerProjectile.height/2); //have to modified on projectile side to adjust up for projectile sprite
-         proj.moveSprite(0,-500);
-         gameEngine.Entities.push(proj);
+         for(var i=0; i<this.playerProjectile.length; i++)
+         {
+             var proj = new window[this.playerProjectile[i]](this._currX, this._currY-this.pSprite.height/2-assets.img_PlayerProjectile.height/2); //have to modified on projectile side to adjust up for projectile sprite
+             proj.moveSprite(0,-500);
+             gameEngine.Entities.push(proj);
+         }
        }
      },
 
@@ -96,19 +99,6 @@ var Player = Class.create(Entity, {
 
      onCollide:function($super, ent){
              $super(ent);
-             if(ent instanceof ScatterShotMod)
-             {
-                 ent._removeTrigger = true;
-                 var proj = new window[this.playerProjectile[1]](this._currX, this._currY-this.pSprite.height/2-assets.img_scatterProjectile.height/2); //have to modified on projectile side to adjust up for projectile sprite
-                 proj.moveSprite(0,-500);
-                 gameEngine.Entities.push(proj);
-                 var proj = new window[this.playerProjectile[2]](this._currX, this._currY-this.pSprite.height/2-assets.img_scatterProjectile.height/2); //have to modified on projectile side to adjust up for projectile sprite
-                 proj.moveSprite(0,-500);
-                 gameEngine.Entities.push(proj);
-                 var proj = new window[this.playerProjectile[3]](this._currX, this._currY-this.pSprite.height/2-assets.img_scatterProjectile.height/2); //have to modified on projectile side to adjust up for projectile sprite
-                 proj.moveSprite(0,-500);
-                 gameEngine.Entities.push(proj);
-             }
          }
 
 });

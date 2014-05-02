@@ -15,6 +15,9 @@ var s_shieldMod = './res/Normal/shieldmod.png';
 var s_shieldSprite = "./res/Normal/NekoShieldSprite.png";
 var s_scatterProjectile = "./res/Normal/scattershot.png";
 var s_scatterShotMod = "./res/Normal/scattershotmod.png";
+var s_clouds = "./res/Normal/clouds.png";
+var s_clouds2 = "./res/Normal/clouds2.png";
+var s_stars = "./res/Normal/stars.png";
 
 var assets = {
     img_Player:new Image(),
@@ -34,9 +37,13 @@ var assets = {
     img_shieldSprite:new Image(),
     img_scatterProjectile:new Image(),
     img_scatterShotMod:new Image(),
-
+    img_clouds:new Image(),
+    img_clouds2:new Image(),
+    img_stars:new Image(),
     loadAssets:function()
     {
+        var c = document.getElementById("gameCanvas");
+        var ctx = c.getContext('2d');
         this.img_Player.src=(s_Player);
         this.img_EnemyA.src=(s_EnemyA);
         this.img_Projectile.src=(s_Projectile);
@@ -54,6 +61,19 @@ var assets = {
         this.img_shieldSprite.src=(s_shieldSprite);
         this.img_scatterProjectile.src=(s_scatterProjectile);
         this.img_scatterShotMod.src=(s_scatterShotMod);
+        this.img_clouds.src=(s_clouds);
+        var self = this;
+        this.img_clouds.onload = function(){var scale = c.width/self.img_clouds.naturalWidth;
+                                            self.img_clouds.width = scale*self.img_clouds.naturalWidth;
+                                            self.img_clouds.height = scale*self.img_clouds.naturalHeight;};
+        this.img_clouds2.src=(s_clouds2);
+        this.img_clouds2.onload = function(){var scale = c.width/self.img_clouds2.naturalWidth;
+                                             self.img_clouds2.width = scale*self.img_clouds2.naturalWidth;
+                                             self.img_clouds2.height = scale*self.img_clouds2.naturalHeight;};
+        this.img_stars.src=(s_stars);
+        this.img_stars.onload = function(){var scale = c.width/self.img_stars.naturalWidth;
+                                           self.img_stars.width = scale*self.img_stars.naturalWidth;
+                                           self.img_stars.height = scale*self.img_stars.naturalHeight;};
 
     }
 };

@@ -8,7 +8,7 @@ var gameEngine = {
     contactListener:null,
     Entities:null,
     player:null,
-    entityTypes:['EnemyA','ScatterShotMod'],
+    entityTypes:['EnemyA'],
     timeout:null,
     entitySpawner:null,
     pointerLocked:false,
@@ -41,6 +41,7 @@ var gameEngine = {
     },
     startWorld:function()
     {
+        this.vy=0;
         this.runTime=0;
         this.prevUpdate = new Date();
         this.gameOver = false;
@@ -111,7 +112,7 @@ var gameEngine = {
         this.prevUpdate = new Date();
         var self = this;
         this.worldPaused = false;
-        this.entitySpawner = setInterval(function(){self.spawnEntities();}, 250);
+        this.entitySpawner = setInterval(function(){self.spawnEntities();}, 2000);
         setTimeout(function(){gameEngine.update()}, 1000/80);
     },
     spawnEntities:function(){
@@ -147,11 +148,6 @@ var gameEngine = {
             newWall.moveSprite(0, 200);
             this.Entities.push(newWall);
          }
-       if(Math.floor(Math.random()*100 > 50))
-         {
-            var newEnt = new window[this.entityTypes[1]](c.width*3/4, 20);
-            this.Entities.push(newEnt);
-         }
     },
     prevUpdate:new Date(),
     update:function(){
@@ -179,6 +175,7 @@ var gameEngine = {
         {
             if(this.Entities[i]._removeTrigger)
             {
+                this.Entities[i].onRemove();
                 this.world.DestroyBody(this.Entities[i]._body);
                 this.Entities.splice(i, 1);
             }
@@ -305,7 +302,7 @@ var gameEngine = {
     },
     moveBackground:function()
     {
-        var progressPercent = 1<this.Entities[0].score/2900?1:this.Entities[0].score/2900;
+        var progressPercent = 1<this.runTime/120?1:this.runTime/120;
         var dProgress = progressPercent*2<1?progressPercent*2:1;
         var c = document.getElementById("gameCanvas");
         var ctx = c.getContext('2d');
@@ -320,6 +317,16 @@ var gameEngine = {
         ctx.fillRect(0,0,c.width, c.height);
         ctx.fillStyle = "rgba(0,0,0,"+progressPercent+")";
         ctx.fillRect(0,0,c.width, c.height);
+        ctx.globalAlpha = 0>(progressPercent-0.5)*2?0:(progressPercent-0.5)*2;
+        ctx.drawImage(assets.img_stars,0,this.vy, assets.img_stars.width, assets.img_stars.height);
+        ctx.drawImage(assets.img_stars,0,this.vy-assets.img_stars.height, assets.img_stars.width, assets.img_stars.height);
+        ctx.globalAlpha = 0>-2*Math.abs(progressPercent-0.5)+1?0:-2*Math.abs(progressPercent-0.5)+1;
+        ctx.drawImage(assets.img_clouds2,0,this.vy, assets.img_clouds2.width, assets.img_clouds2.height);
+        ctx.drawImage(assets.img_clouds2,0,this.vy-assets.img_clouds2.height, assets.img_clouds2.width, assets.img_clouds2.height);
+        ctx.globalAlpha = 1<(1-progressPercent*2)?1:(1-progressPercent*2);
+        ctx.drawImage(assets.img_clouds,0,this.vy, assets.img_clouds.width, assets.img_clouds.height);
+        ctx.drawImage(assets.img_clouds,0,this.vy-assets.img_clouds.height, assets.img_clouds.width, assets.img_clouds.height);
+        ctx.globalAlpha = 1;
         /*var bg1;
         if(this.Entities[0].score > 900 && this.Entities[0].score < 2000)
             bg1 = assets.img_background2;
@@ -331,11 +338,9 @@ var gameEngine = {
             bg1 = assets.img_background1;
 
 
-        ctx.drawImage(bg1,0,this.vy);
-        ctx.drawImage(bg1,0,this.vy-bg1.height);
-        if(Math.abs(this.vy) > bg1.height)
+        */
+        if(Math.abs(this.vy) > assets.img_stars.height)
             this.vy = 0;
-        this.vy+=2;*/
-
+        this.vy+=2;
     }
 };
