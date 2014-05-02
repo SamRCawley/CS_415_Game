@@ -9,7 +9,7 @@ var start = {
             ctx.drawImage(bg, 0, 0);
             var y = (ctx.canvas.height) / 2;
             start.centerTxt(ctx);
-            y = (ctx.canvas.height - img.height)/2;
+            y = (ctx.canvas.height - img.height)/2 + 210;
             x=(ctx.canvas.width - img.width) / 2;
             ctx.drawImage(img, x, y);
             }
