@@ -8,6 +8,9 @@ var Player = Class.create(Entity, {
     fireTimer:null,
     mouseJoint:null,
     playerProjectile:["PlayerProjectile"],
+    attackBuffTimer:null,
+    defenseBuffTimer:null,
+    fireRate:500,
 //    shield:null,
     initialize: function($super, x,y) {
         $super(x,y);
@@ -28,7 +31,7 @@ var Player = Class.create(Entity, {
         fixDef.shape = new b2PolygonShape();
         fixDef.filter.categoryBits = categories.player;
         // half width, half height.
-        fixDef.shape.SetAsBox((self.pSprite.width) / 2 /b2Unit, (self.pSprite.height) / 2 /b2Unit);
+        fixDef.shape.SetAsBox((self.pSprite.width)*0.8 / 2 /b2Unit, (self.pSprite.height)*0.8 / 2 /b2Unit); //80% size
         self._body = gameEngine.world.CreateBody(bodyDef)
         self._body.CreateFixture(fixDef);
         this.mouseDef = new b2MouseJointDef();
@@ -44,7 +47,7 @@ var Player = Class.create(Entity, {
     update:function($super){
        $super();
        var currentTime = new Date();
-       if(this.fireTimer == null || currentTime - this.fireTimer >= 500)  //1 shot every 0.5 seconds
+       if(this.fireTimer == null || currentTime - this.fireTimer >= this.fireRate)  //1 shot every 0.5 seconds
        {
          this.fireTimer = currentTime
          for(var i=0; i<this.playerProjectile.length; i++)

@@ -3,7 +3,7 @@ var StanBoss = Class.create(Entity, {
     _currX:0,
     _currY:0,
     scale:0.1,
-    enemyProjectile:["Projectile"],
+    enemyProjectile:["EnemyScatter"],
     pSprite:null,
     initialize: function($super, x, y) {
             $super(x,y);
@@ -29,18 +29,21 @@ var StanBoss = Class.create(Entity, {
             self._body = gameEngine.world.CreateBody(bodyDef)
             self._body.CreateFixture(fixDef);
 
-            this.moveSprite(0,100);
+            this.moveSprite(Math.random()*30-15, Math.random()*15);
 
 //            this.SetLinearVelocity(b2Vec2((document.getElementById("gameCanvas").width/2/b2Unit - this._currX)/SPEED_RATIO,(size.height - document.getElementById("gameCanvas").height/2/b2Unit - this._currY)/SPEED_RATIO));
     },
 
     update:function($super){
             $super();
-          if(Math.floor(Math.random() * 30+1) % 30 == 0 && this._body)  //1 in 30 chance * 60 frames per second = 2 per second
+          if(Math.floor(Math.random() * 60+1) % 60 == 0 && this._body)  //1 in 30 chance * 60 frames per second = 2 per second
           {
-              var proj = new window[this.enemyProjectile[0]](this._currX, this._currY+this.pSprite.height/2+assets.img_Projectile.height/2);
-              proj.moveSprite(0,500);
-              gameEngine.Entities.push(proj);
+              for(var i= -120; i<=120; i+=16)
+              {
+                  var proj = new window[this.enemyProjectile[0]](this._currX+i, this._currY+this.pSprite.height/2+assets.img_Projectile.height/2);
+                  proj.moveSprite(i*5,200);
+                  gameEngine.Entities.push(proj);
+              }
           }
           if(this._currY == document.getElementById("gameCanvas").height/2/b2Unit)
           {

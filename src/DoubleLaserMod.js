@@ -44,13 +44,21 @@ var DoubleLaserMod = Class.create(Entity, {
         this._removeTrigger = true;
         if(ent instanceof Player)
         {
-//            var temp1 = ent.playerProjectile["DoubleLaser"];
-//            temp1._currX = ent._currX-this.pSprite.width/4-assets.img_PlayerProjectile.width/4;
-//            var temp2 = "DoubleLaser";
-//            temp2._currX = ent._currX-this.pSprite.width/4+assets.img_PlayerProjectile.width/4;
-//            ent.playerProjectile = [temp1,temp2];
-
-            ent.playerProjectile = ["DoubleLaser","DoubleLaser"]; //to be removed once commented code above works.
+            if(ent.attackBuffTimer == null)
+                ent.attackBuffTimer = new Timer(function(){
+                    ent.attackBuffTimer = null;
+                    ent.fireRate = 500;
+                    ent.playerProjectile = ["PlayerProjectile"];}, 10000);
+            else
+            {
+                ent.attackBuffTimer.clear();
+                ent.attackBuffTimer = new Timer(function(){
+                    ent.attackBuffTimer = null;
+                    ent.fireRate = 500;
+                    ent.playerProjectile = ["PlayerProjectile"];}, 10000);
+            }
+            ent.fireRate = 100;
+            ent.playerProjectile = ["DoubleLaserLeft","DoubleLaserRight"]; //to be removed once commented code above works.
             this._removeTrigger = true;
         }
     }

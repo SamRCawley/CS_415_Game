@@ -105,10 +105,18 @@ var gameEngine = {
     pauseWorld:function()
     {
         this.worldPaused = true;
+        if(this.Entities[0].attackBuffTimer != null)
+            this.Entities[0].attackBuffTimer.pause();
+        if(this.Entities[0].defenseBuffTimer != null)
+            this.Entities[0].defenseBuffTimer.pause();
         window.clearInterval(this.entitySpawner);
     },
     unPauseWorld:function()
     {
+        if(this.Entities[0].attackBuffTimer != null)
+            this.Entities[0].attackBuffTimer.resume();
+        if(this.Entities[0].defenseBuffTimer != null)
+            this.Entities[0].defenseBuffTimer.resume();
         this.prevUpdate = new Date();
         var self = this;
         this.worldPaused = false;
@@ -148,11 +156,11 @@ var gameEngine = {
             newWall.moveSprite(0, 200);
             this.Entities.push(newWall);
          }
-//       if(Math.floor(Math.random()*100 > 50))
-//         {
-//            var boss = new window["StanBoss"](c.width*1/2, 20);
-//            this.Entities.push(boss);
-//         }
+       if(Math.floor(Math.random()*500+1 > 500))
+         {
+            var boss = new window["StanBoss"](c.width*1/2, 20);
+            this.Entities.push(boss);
+         }
     },
     prevUpdate:new Date(),
     update:function(){

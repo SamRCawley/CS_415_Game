@@ -49,6 +49,23 @@ var ShieldMod = Class.create(Entity, {
             ent.pSprite.width = (ent.pSprite.naturalWidth * ent.scale);
             ent.pSprite.height = (ent.pSprite.naturalHeight * ent.scale);
             ent.shield = true;
+            if(ent.defenseBuffTimer == null)
+                ent.defenseBuffTimer = new Timer(function(){
+                            ent.defenseBuffTimer = null;
+                            ent.shield = false;
+                            ent.pSprite = assets.img_Player;
+                            ent.pSprite.width = (ent.pSprite.naturalWidth * ent.scale);
+                            ent.pSprite.height = (ent.pSprite.naturalHeight * ent.scale);}, 10000);
+            else
+            {
+                ent.defenseBuffTimer.clear();
+                ent.defenseBuffTimer = new Timer(function(){
+                            ent.defenseBuffTimer = null;
+                            ent.shield = false;
+                            ent.pSprite = assets.img_Player;
+                            ent.pSprite.width = (ent.pSprite.naturalWidth * ent.scale);
+                            ent.pSprite.height = (ent.pSprite.naturalHeight * ent.scale);}, 10000);
+            }
             this._removeTrigger = true;
         }
     }

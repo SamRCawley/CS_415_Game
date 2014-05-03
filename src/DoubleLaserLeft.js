@@ -1,11 +1,11 @@
-var DoubleLaser = Class.create(Entity, {
+var DoubleLaserLeft = Class.create(Entity, {
     health:1,
     _currX:0,
     _currY:0,
     scale:0.2,
     pSprite:null,
     initialize: function($super, x, y) {
-            $super(x,y);
+            $super(x-5,y);
             this.pSprite= assets.img_doubleLaser;
             var self = this;
             self.pSprite.width = (self.pSprite.naturalWidth * self.scale);
@@ -44,7 +44,7 @@ var DoubleLaser = Class.create(Entity, {
         {
             ent._removeTrigger = true; //change to damage in future update
             this._removeTrigger = true;
-            gameEngine.Entities[0].increaseScore(100);
+            //gameEngine.Entities[0].increaseScore(100);
         }
 
     }

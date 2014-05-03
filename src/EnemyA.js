@@ -34,10 +34,10 @@ var EnemyA = Class.create(Entity, {
 
     update:function($super){
             $super();
-          if(Math.floor(Math.random() * 30+1) % 30 == 0 && this._body)  //1 in 30 chance * 60 frames per second = 2 per second
+          if(Math.floor(Math.random() * 70+1) % 70 == 0 && this._body)  //1 in 30 chance * 60 frames per second = 2 per second
           {
               var proj = new window[this.enemyProjectile[0]](this._currX, this._currY+this.pSprite.height/2+assets.img_Projectile.height/2);
-              proj.moveSprite(0,500);
+              proj.moveSprite(0,200);
               gameEngine.Entities.push(proj);
           }
     },
