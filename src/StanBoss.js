@@ -1,4 +1,4 @@
-var EnemyA = Class.create(Entity, {
+var StanBoss = Class.create(Entity, {
     health:1,
     _currX:0,
     _currY:0,
@@ -7,7 +7,7 @@ var EnemyA = Class.create(Entity, {
     pSprite:null,
     initialize: function($super, x, y) {
             $super(x,y);
-            this.pSprite = assets.img_EnemyA;
+            this.pSprite = assets.img_stanBoss;
             var self = this;
             self.pSprite.width = (self.pSprite.naturalWidth * self.scale);
             self.pSprite.height = (self.pSprite.naturalHeight * self.scale);
@@ -29,7 +29,9 @@ var EnemyA = Class.create(Entity, {
             self._body = gameEngine.world.CreateBody(bodyDef)
             self._body.CreateFixture(fixDef);
 
-            this.moveSprite(Math.floor(Math.random() * 60) % 60,Math.floor(Math.random() * 60) % 60);
+            this.moveSprite(0,100);
+
+//            this.SetLinearVelocity(b2Vec2((document.getElementById("gameCanvas").width/2/b2Unit - this._currX)/SPEED_RATIO,(size.height - document.getElementById("gameCanvas").height/2/b2Unit - this._currY)/SPEED_RATIO));
     },
 
     update:function($super){
@@ -40,28 +42,12 @@ var EnemyA = Class.create(Entity, {
               proj.moveSprite(0,500);
               gameEngine.Entities.push(proj);
           }
+          if(this._currY == document.getElementById("gameCanvas").height/2/b2Unit)
+          {
+            this.moveSprite(0,0);
+          }
     },
     onRemove:function($super){
         $super();
-        if(Math.floor(Math.random()*50+1)%50 == 0)
-        {
-            var newEnt = new window["ScatterShotMod"](this._currX, this._currY);
-            gameEngine.Entities.push(newEnt);
-        }
-        if(Math.floor(Math.random()*50+1)%50 == 0)
-        {
-            var newEnt = new window["DoubleLaserMod"](this._currX, this._currY);
-            gameEngine.Entities.push(newEnt);
-        }
-        if(Math.floor(Math.random()*50+1)%50 == 0)
-        {
-            var newEnt = new window["ShieldMod"](this._currX, this._currY);
-            gameEngine.Entities.push(newEnt);
-        }
-        if(Math.floor(Math.random()*50+1)%50 == 0)
-        {
-            var newEnt = new window["HealthMod"](this._currX, this._currY);
-            gameEngine.Entities.push(newEnt);
-        }
     }
 });

@@ -27,6 +27,7 @@ var ScatterShotMod = Class.create(Entity, {
             fixDef.shape.SetAsBox((self.pSprite.width) / 2 /b2Unit, (self.pSprite.height) / 2 /b2Unit);
             self._body = gameEngine.world.CreateBody(bodyDef)
             self._body.CreateFixture(fixDef);
+            var startTime = 0;
 
 
             this.moveSprite(0,250);
@@ -39,11 +40,17 @@ var ScatterShotMod = Class.create(Entity, {
                 this._removeTrigger = true;
             var vel = this._body.GetLinearVelocity();
         }
+        if(this.runtime ==5000)//60000
+        {
+            ent.playerProjectile = ["PlayerProjectile"];
+            this._removeTrigger = true;
+        }
     },
     onCollide:function(ent){
         this._removeTrigger = true;
         if(ent instanceof Player)
         {
+            this.startTime = Date.now();
             ent.playerProjectile = ["ScatterLeft","ScatterCenter","ScatterRight"];
             this._removeTrigger = true;
         }

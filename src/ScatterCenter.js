@@ -30,17 +30,6 @@ var ScatterCenter = Class.create(Entity, {
 
     },
 
-    shoot:function(){
-        var bulletPosition = this.midpoint();
-
-        player.midpoint = function() {
-          return {
-            x: this.x + this.width/2,
-            y: this.y + this.height/2
-          };
-        };
-    },
-
     update:function($super){
         $super();
         if(this._body)

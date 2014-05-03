@@ -1,4 +1,4 @@
-var PlayerProjectile = Class.create(Entity, {
+var DoubleLaser = Class.create(Entity, {
     health:1,
     _currX:0,
     _currY:0,
@@ -6,7 +6,7 @@ var PlayerProjectile = Class.create(Entity, {
     pSprite:null,
     initialize: function($super, x, y) {
             $super(x,y);
-            this.pSprite= assets.img_PlayerProjectile;
+            this.pSprite= assets.img_doubleLaser;
             var self = this;
             self.pSprite.width = (self.pSprite.naturalWidth * self.scale);
             self.pSprite.height = (self.pSprite.naturalHeight * self.scale);

@@ -28,17 +28,8 @@ var ScatterRight = Class.create(Entity, {
             self._body = gameEngine.world.CreateBody(bodyDef)
             self._body.CreateFixture(fixDef);
 
-    },
+            var startTime = 0;
 
-    shoot:function(){
-        var bulletPosition = this.midpoint();
-
-        player.midpoint = function() {
-          return {
-            x: this.x + this.width/2,
-            y: this.y + this.height/2
-          };
-        };
     },
 
     update:function($super){
@@ -48,6 +39,11 @@ var ScatterRight = Class.create(Entity, {
             if(this._currX > document.getElementById("gameCanvas").width + 50 || this._currY > document.getElementById("gameCanvas").height + 50 || this._currX < -50)
                 this._removeTrigger = true;
             var vel = this.moveSprite(145,-145);
+        }
+        if(this.startTime == 1000)//60000
+        {
+            ent.playerProjectile = ["PlayerProjectile"];
+            this._removeTrigger = true;
         }
     },
     onCollide:function(ent){

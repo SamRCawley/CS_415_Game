@@ -8,6 +8,7 @@ var Player = Class.create(Entity, {
     fireTimer:null,
     mouseJoint:null,
     playerProjectile:["PlayerProjectile"],
+//    shield:null,
     initialize: function($super, x,y) {
         $super(x,y);
         this.pSprite= assets.img_Player;
@@ -38,6 +39,7 @@ var Player = Class.create(Entity, {
         this.mouseDef.maxForce = 1000 * this._body.GetMass();
         this.mouseDef.dampingRatio = 0.9;
         this.mouseJoint = gameEngine.world.CreateJoint(this.mouseDef);
+        var shield = new Boolean(false);
     },
     update:function($super){
        $super();
@@ -58,6 +60,8 @@ var Player = Class.create(Entity, {
      {
         if((this.health - damage) < 0 )
             this.health = 0;
+        if(this.shield == true)
+            null;
         else
             this.health-=damage;
      },

@@ -148,6 +148,11 @@ var gameEngine = {
             newWall.moveSprite(0, 200);
             this.Entities.push(newWall);
          }
+//       if(Math.floor(Math.random()*100 > 50))
+//         {
+//            var boss = new window["StanBoss"](c.width*1/2, 20);
+//            this.Entities.push(boss);
+//         }
     },
     prevUpdate:new Date(),
     update:function(){
