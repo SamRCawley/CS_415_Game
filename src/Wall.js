@@ -16,17 +16,27 @@ var wall = Class.create(Entity, {
             bodyDef.position.y = self._currY/b2Unit; //Note: Using 10 pixels per box2d unit
             bodyDef.fixedRotation = true;
             bodyDef.userData = self;
-            var fixDef = new b2FixtureDef();
-            fixDef.density = 1.0;
-            fixDef.friction = 0.3;
-            fixDef.restitution = 0.8;
-            fixDef.shape = new b2PolygonShape();
-            fixDef.filter.categoryBits = categories.plane;
-            fixDef.filter.maskBits = ~(categories.wall|categories.plane); //not walls or projectiles
+            var wings = new b2FixtureDef();
+            wings.density = 5000.0;
+            wings.friction = 0.3;
+            wings.restitution = 0.0;
+            wings.shape = new b2PolygonShape();
+            wings.filter.categoryBits = categories.plane;
+            wings.filter.maskBits = ~(categories.wall|categories.plane); //not walls or projectiles
             // half width, half height.
-            fixDef.shape.SetAsBox((self.pSprite.width) / 2 /b2Unit, (self.pSprite.height) / 2 /b2Unit);
+            wings.shape.SetAsBox((self.pSprite.width) / 2 /b2Unit, (self.pSprite.height) / 10 /b2Unit);
+            var planeBody = new b2FixtureDef();
+            planeBody.density = 5000.0;
+            planeBody.friction = 0.3;
+            planeBody.restitution = 0.0;
+            planeBody.shape = new b2PolygonShape();
+            planeBody.filter.categoryBits = categories.plane;
+            planeBody.filter.maskBits = ~(categories.wall|categories.plane); //not walls or projectiles
+            // half width, half height.
+            planeBody.shape.SetAsBox((self.pSprite.width) / 10 /b2Unit, (self.pSprite.height) / 2 /b2Unit);
             self._body = gameEngine.world.CreateBody(bodyDef)
-            self._body.CreateFixture(fixDef);
+            self._body.CreateFixture(wings);
+            self._body.CreateFixture(planeBody);
 
     },
     update:function($super){

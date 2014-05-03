@@ -354,6 +354,6 @@ var gameEngine = {
         */
         if(Math.abs(this.vy) > assets.img_stars.height)
             this.vy = 0;
-        this.vy+=5;
+        this.vy+=3;
     }
 };
