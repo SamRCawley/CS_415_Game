@@ -20,6 +20,7 @@ var s_scatterShotMod = "./res/Normal/scattershotmod.png";
 var s_clouds = "./res/Normal/clouds.png";
 var s_clouds2 = "./res/Normal/clouds2.png";
 var s_stars = "./res/Normal/stars.png";
+var s_squirrel ="./res/Normal/squirrelenemy.png";
 
 var assets = {
     img_Player:new Image(),
@@ -44,6 +45,7 @@ var assets = {
     img_clouds:new Image(),
     img_clouds2:new Image(),
     img_stars:new Image(),
+    img_squirrel:new Image(),
     loadAssets:function()
     {
         var c = document.getElementById("gameCanvas");
@@ -68,6 +70,7 @@ var assets = {
         this.img_scatterProjectile.src=(s_scatterProjectile);
         this.img_scatterShotMod.src=(s_scatterShotMod);
         this.img_clouds.src=(s_clouds);
+        this.img_squirrel.src=(s_squirrel);
         var self = this;
         this.img_clouds.onload = function(){var scale = c.width/self.img_clouds.naturalWidth;
                                             self.img_clouds.width = scale*self.img_clouds.naturalWidth;
