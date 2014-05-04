@@ -32,12 +32,6 @@ var PlayerProjectile = Class.create(Entity, {
 
     update:function($super){
         $super();
-        if(this._body)
-        {
-            if(this._currX > document.getElementById("gameCanvas").width + 50 || this._currY > document.getElementById("gameCanvas").height + 50 || this._currX < -50)
-                this._removeTrigger = true;
-            var vel = this._body.GetLinearVelocity();
-        }
     },
     onCollide:function(ent){
         if(!(ent instanceof wall))
@@ -45,11 +39,11 @@ var PlayerProjectile = Class.create(Entity, {
             ent.takeDamage(10);
             if(ent.health == 0)
             {
-//                ent._removeTrigger = true;
-                this._removeTrigger = true;
+                ent._removeTrigger = true;
                 gameEngine.Entities[0].increaseScore(100);
             }
         }
+        this._removeTrigger = true;
     }
 
 });

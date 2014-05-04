@@ -47,7 +47,7 @@ var SquirrelProjectile = Class.create(Entity, {
         {
             if(this._currX > document.getElementById("gameCanvas").width + 50 || this._currY > document.getElementById("gameCanvas").height + 50 || this._currX < -50)
                 this._removeTrigger = true;
-            var vel = this._body.GetLinearVelocity();
+            //var vel = this._body.GetLinearVelocity();
         }
     },
     onCollide:function(ent){

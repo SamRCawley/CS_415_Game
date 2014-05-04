@@ -123,31 +123,40 @@ var gameEngine = {
         this.entitySpawner = setInterval(function(){self.spawnEntities();}, 2000);
         setTimeout(function(){gameEngine.update()}, 1000/80);
     },
+    getEntType:function(){
+        var shift = this.runTime/40<2?this.runTime/40:2;
+        var entRand = Math.random()*2-1+Math.random()*2-1+Math.random()*2-1;
+        var entType = Math.floor(entRand*this.entityTypes.length+shift-2);
+        entType = entType>0? entType:0;
+        entType = entType<this.entityTypes.length?entType:this.entityTypes.length-1;
+        return entType;
+    },
     spawnEntities:function(){
     var c=document.getElementById("gameCanvas");
     var timeMulti = 70*Math.pow(this.runTime, 1/4)-1;
+
     if(Math.floor(Math.random()*timeMulti) > 90){  //MIDDLE SPAWN POINT
-        var newEnt = new window[this.entityTypes[0]](c.width/2,20);
+        var newEnt = new window[this.entityTypes[this.getEntType()]](c.width/2,20);
         this.Entities.push(newEnt);
         }
        if(Math.floor(Math.random()*timeMulti) > 90)  //LEFT SPAWN POINT
        {
-           var newEnt = new window[this.entityTypes[0]](20,20);
+           var newEnt = new window[this.entityTypes[this.getEntType()]](20,20);
            this.Entities.push(newEnt);
        }
        if(Math.floor(Math.random()*timeMulti) > 90)  //RIGHT SPAWN POINT
        {
-           var newEnt = new window[this.entityTypes[0]](900,20);
+           var newEnt = new window[this.entityTypes[this.getEntType()]](900,20);
            this.Entities.push(newEnt);
        }
        if(Math.floor(Math.random()*timeMulti) > 90)//LEFT-MIDDLE SPAWN POINT
           {
-              var newEnt = new window[this.entityTypes[0]](c.width/4,20);
+              var newEnt = new window[this.entityTypes[this.getEntType()]](c.width/4,20);
               this.Entities.push(newEnt);
           }
        if(Math.floor(Math.random()*timeMulti) > 90) //RIGHT-MIDDLE SPAWN POINT
          {
-             var newEnt = new window[this.entityTypes[0]](c.width*3/4,20);
+             var newEnt = new window[this.entityTypes[this.getEntType()]](c.width*3/4,20);
              this.Entities.push(newEnt);
          }
        if(Math.floor(Math.random()*100 > 95))

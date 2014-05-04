@@ -18,7 +18,7 @@ var SquirrelEnemy = Class.create(Entity, {
             bodyDef.fixedRotation = true;
             bodyDef.userData = self;
             var fixDef = new b2FixtureDef();
-            fixDef.density = 1.0;
+            fixDef.density = 1000.0;
             fixDef.friction = 0.3;
             fixDef.restitution = 0.8;
             fixDef.shape = new b2PolygonShape();
@@ -36,9 +36,12 @@ var SquirrelEnemy = Class.create(Entity, {
             $super();
           if(Math.floor(Math.random() * 70+1) % 70 == 0 && this._body)  //1 in 30 chance * 60 frames per second = 2 per second
           {
-              var proj = new window[this.enemyProjectile[0]](this._currX, this._currY+this.pSprite.height/2+assets.img_Projectile.height/2);
-              proj.moveSprite(0,200);
-              gameEngine.Entities.push(proj);
+              for(var i= -120; i<=120; i+=120)
+            {
+                var proj = new window[this.enemyProjectile[0]](this._currX+i, this._currY+this.pSprite.height/2+assets.img_Projectile.height/2);
+                proj.moveSprite(i*5,200);
+                gameEngine.Entities.push(proj);
+            }
           }
     },
 

@@ -32,12 +32,6 @@ var EnemyScatter = Class.create(Entity, {
 
     update:function($super){
         $super();
-        if(this._body)
-        {
-            if(this._currX > document.getElementById("gameCanvas").width + 50 || this._currY > document.getElementById("gameCanvas").height + 50 || this._currX < -50)
-                this._removeTrigger = true;
-            //var vel = this.moveSprite(0,-145);
-        }
     },
     onCollide:function(ent){
         this._removeTrigger = true;

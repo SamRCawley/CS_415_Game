@@ -79,6 +79,12 @@ var Entity = Class.create({
     update:function()
     {
         this.redraw();
+        if(this._body)
+        {
+            if(this._currX > document.getElementById("gameCanvas").width + 50 || this._currY > document.getElementById("gameCanvas").height + 50 || this._currX < -50)
+                this._removeTrigger = true;
+            //var vel = this._body.GetLinearVelocity();
+        }
     },
 
     redraw:function(){
