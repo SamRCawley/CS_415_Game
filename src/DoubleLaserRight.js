@@ -44,7 +44,7 @@ var DoubleLaserRight = Class.create(Entity, {
         {
             ent._removeTrigger = true; //change to damage in future update
             this._removeTrigger = true;
-            //gameEngine.Entities[0].increaseScore(100);
+            gameEngine.Entities[0].increaseScore(100);
         }
 
     }
