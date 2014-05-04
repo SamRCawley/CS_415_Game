@@ -88,7 +88,7 @@ var Entity = Class.create({
 
     onCollide:function(ent)
     {
-        if(ent instanceof Player)
+        if(ent instanceof Player && ent.shield == false)
         {
             ent.takeDamage(100)
             this._removeTrigger = true;

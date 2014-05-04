@@ -1,5 +1,5 @@
 var EnemyA = Class.create(Entity, {
-    health:1,
+    health:10,
     _currX:0,
     _currY:0,
     scale:0.1,
@@ -41,6 +41,15 @@ var EnemyA = Class.create(Entity, {
               gameEngine.Entities.push(proj);
           }
     },
+
+    takeDamage:function(damage)
+    {
+       if((this.health - damage) < 0 )
+           this.health = 0;
+       else
+           this.health-=damage;
+    },
+
     onRemove:function($super){
         $super();
         if(Math.floor(Math.random()*50+1)%50 == 0)

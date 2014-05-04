@@ -8,7 +8,7 @@ var gameEngine = {
     contactListener:null,
     Entities:null,
     player:null,
-    entityTypes:['EnemyA'],
+    entityTypes:['EnemyA','SquirrelEnemy'],
     timeout:null,
     entitySpawner:null,
     pointerLocked:false,

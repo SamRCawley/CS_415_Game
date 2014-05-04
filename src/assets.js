@@ -1,7 +1,9 @@
 var s_Player = './res/Normal/NekoSprite.png';
 var s_EnemyA = './res/Normal/birdenemy.png';
+var s_squirrel ="./res/Normal/squirrelenemy.png";
 var s_stanBoss = './res/Normal/stanboss.png';
 var s_Projectile = './res/Normal/redLaser.png';
+var s_squirrelProjectile ="./res/Normal/blueLaser.png";
 var s_PlayerProjectile = './res/Normal/purpleLaser.png';
 var s_background1 = './res/Normal/skybackground.png';
 var s_background2 = './res/Normal/skybackground2.png';
@@ -20,13 +22,14 @@ var s_scatterShotMod = "./res/Normal/scattershotmod.png";
 var s_clouds = "./res/Normal/clouds.png";
 var s_clouds2 = "./res/Normal/clouds2.png";
 var s_stars = "./res/Normal/stars.png";
-var s_squirrel ="./res/Normal/squirrelenemy.png";
 
 var assets = {
     img_Player:new Image(),
     img_EnemyA:new Image(),
+    img_squirrel:new Image(),
     img_stanBoss:new Image(),
     img_Projectile:new Image(),
+    img_squirrelProjectile:new Image(),
     img_PlayerProjectile:new Image(),
     img_background1:new Image(),
     img_background2:new Image(),
@@ -45,15 +48,16 @@ var assets = {
     img_clouds:new Image(),
     img_clouds2:new Image(),
     img_stars:new Image(),
-    img_squirrel:new Image(),
     loadAssets:function()
     {
         var c = document.getElementById("gameCanvas");
         var ctx = c.getContext('2d');
         this.img_Player.src=(s_Player);
         this.img_EnemyA.src=(s_EnemyA);
+        this.img_squirrel.src=(s_squirrel);
         this.img_stanBoss.src=(s_stanBoss);
         this.img_Projectile.src=(s_Projectile);
+        this.img_squirrelProjectile.src=(s_squirrelProjectile);
         this.img_PlayerProjectile.src=(s_PlayerProjectile);
         this.img_background1.src=(s_background1);
         this.img_background2.src=(s_background2);
@@ -70,7 +74,6 @@ var assets = {
         this.img_scatterProjectile.src=(s_scatterProjectile);
         this.img_scatterShotMod.src=(s_scatterShotMod);
         this.img_clouds.src=(s_clouds);
-        this.img_squirrel.src=(s_squirrel);
         var self = this;
         this.img_clouds.onload = function(){var scale = c.width/self.img_clouds.naturalWidth;
                                             self.img_clouds.width = scale*self.img_clouds.naturalWidth;

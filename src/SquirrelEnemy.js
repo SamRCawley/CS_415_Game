@@ -1,13 +1,13 @@
-var StanBoss = Class.create(Entity, {
-    health:30,
+var SquirrelEnemy = Class.create(Entity, {
+    health:20,
     _currX:0,
     _currY:0,
     scale:0.1,
-    enemyProjectile:["EnemyScatter"],
+    enemyProjectile:["SquirrelProjectile"],
     pSprite:null,
     initialize: function($super, x, y) {
             $super(x,y);
-            this.pSprite = assets.img_stanBoss;
+            this.pSprite = assets.img_squirrel;
             var self = this;
             self.pSprite.width = (self.pSprite.naturalWidth * self.scale);
             self.pSprite.height = (self.pSprite.naturalHeight * self.scale);
@@ -29,37 +29,49 @@ var StanBoss = Class.create(Entity, {
             self._body = gameEngine.world.CreateBody(bodyDef)
             self._body.CreateFixture(fixDef);
 
-            this.moveSprite(Math.random()*30-15, Math.random()*15);
-
-//            this.SetLinearVelocity(b2Vec2((document.getElementById("gameCanvas").width/2/b2Unit - this._currX)/SPEED_RATIO,(size.height - document.getElementById("gameCanvas").height/2/b2Unit - this._currY)/SPEED_RATIO));
+            this.moveSprite(Math.floor(Math.random() * 60) % 60,Math.floor(Math.random() * 60) % 60);
     },
 
     update:function($super){
             $super();
-          if(Math.floor(Math.random() * 60+1) % 60 == 0 && this._body)  //1 in 30 chance * 60 frames per second = 2 per second
+          if(Math.floor(Math.random() * 70+1) % 70 == 0 && this._body)  //1 in 30 chance * 60 frames per second = 2 per second
           {
-              for(var i= -120; i<=120; i+=16)
-              {
-                  var proj = new window[this.enemyProjectile[0]](this._currX+i, this._currY+this.pSprite.height/2+assets.img_Projectile.height/2);
-                  proj.moveSprite(i*5,200);
-                  gameEngine.Entities.push(proj);
-              }
-          }
-          if(this._currY == document.getElementById("gameCanvas").height/2/b2Unit)
-          {
-            this.moveSprite(0,0);
+              var proj = new window[this.enemyProjectile[0]](this._currX, this._currY+this.pSprite.height/2+assets.img_Projectile.height/2);
+              proj.moveSprite(0,200);
+              gameEngine.Entities.push(proj);
           }
     },
 
+
      takeDamage:function(damage)
      {
+        this.health-=damage;
         if((this.health - damage) < 0 )
             this.health = 0;
-        else
-            this.health-=damage;
+
      },
 
     onRemove:function($super){
         $super();
+        if(Math.floor(Math.random()*50+1)%50 == 0)
+        {
+            var newEnt = new window["ScatterShotMod"](this._currX, this._currY);
+            gameEngine.Entities.push(newEnt);
+        }
+        if(Math.floor(Math.random()*50+1)%50 == 0)
+        {
+            var newEnt = new window["DoubleLaserMod"](this._currX, this._currY);
+            gameEngine.Entities.push(newEnt);
+        }
+        if(Math.floor(Math.random()*50+1)%50 == 0)
+        {
+            var newEnt = new window["ShieldMod"](this._currX, this._currY);
+            gameEngine.Entities.push(newEnt);
+        }
+        if(Math.floor(Math.random()*50+1)%50 == 0)
+        {
+            var newEnt = new window["HealthMod"](this._currX, this._currY);
+            gameEngine.Entities.push(newEnt);
+        }
     }
 });

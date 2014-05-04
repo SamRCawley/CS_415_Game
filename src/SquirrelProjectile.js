@@ -1,4 +1,4 @@
-var PlayerProjectile = Class.create(Entity, {
+var SquirrelProjectile = Class.create(Entity, {
     health:1,
     _currX:0,
     _currY:0,
@@ -6,7 +6,7 @@ var PlayerProjectile = Class.create(Entity, {
     pSprite:null,
     initialize: function($super, x, y) {
             $super(x,y);
-            this.pSprite= assets.img_PlayerProjectile;
+            this.pSprite= assets.img_squirrelProjectile;
             var self = this;
             self.pSprite.width = (self.pSprite.naturalWidth * self.scale);
             self.pSprite.height = (self.pSprite.naturalHeight * self.scale);
@@ -22,12 +22,23 @@ var PlayerProjectile = Class.create(Entity, {
             fixDef.restitution = 0.8;
             fixDef.shape = new b2PolygonShape();
             fixDef.filter.categoryBits = categories.projectile;
-            fixDef.filter.maskBits = ~(categories.wall|categories.projectile|categories.player); //not walls or projectiles
+            fixDef.filter.maskBits = ~(categories.wall|categories.projectile|categories.bird); //not walls or projectiles
             // half width, half height.
             fixDef.shape.SetAsBox((self.pSprite.width) / 2 /b2Unit, (self.pSprite.height) / 2 /b2Unit);
             self._body = gameEngine.world.CreateBody(bodyDef)
             self._body.CreateFixture(fixDef);
 
+    },
+
+    shoot:function(){
+        var bulletPosition = this.midpoint();
+
+        player.midpoint = function() {
+          return {
+            x: this.x + this.width/2,
+            y: this.y + this.height/2
+          };
+        };
     },
 
     update:function($super){
@@ -40,16 +51,15 @@ var PlayerProjectile = Class.create(Entity, {
         }
     },
     onCollide:function(ent){
-        if(!(ent instanceof wall))
+        this._removeTrigger = true;
+        if(ent instanceof Player)
         {
             ent.takeDamage(10);
             if(ent.health == 0)
             {
-//                ent._removeTrigger = true;
-                this._removeTrigger = true;
-                gameEngine.Entities[0].increaseScore(100);
+                gameEngine.stopWorld();
+                gameEngine.gameOver=true;
             }
         }
     }
-
 });
