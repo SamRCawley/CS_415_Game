@@ -8,7 +8,7 @@ var gameEngine = {
     contactListener:null,
     Entities:null,
     player:null,
-    entityTypes:['EnemyA','SquirrelEnemy'],
+    entityTypes:['EnemyA','SquirrelEnemy','wall'],
     timeout:null,
     entitySpawner:null,
     pointerLocked:false,
@@ -159,12 +159,12 @@ var gameEngine = {
              var newEnt = new window[this.entityTypes[this.getEntType()]](c.width*3/4,20);
              this.Entities.push(newEnt);
          }
-       if(Math.floor(Math.random()*100 > 95))
+       /*if(Math.floor(Math.random()*100 > 30))
          {
             var newWall = new window["wall"](c.width*1/2, 20);
             newWall.moveSprite(0, 200);
             this.Entities.push(newWall);
-         }
+         }*/
        if(Math.floor(Math.random()*500+1 > 500))
          {
             var boss = new window["StanBoss"](c.width*1/2, 20);
@@ -342,10 +342,10 @@ var gameEngine = {
         ctx.globalAlpha = 0>(progressPercent-0.5)*2?0:(progressPercent-0.5)*2;
         ctx.drawImage(assets.img_stars,0,this.vy, assets.img_stars.width, assets.img_stars.height);
         ctx.drawImage(assets.img_stars,0,this.vy-assets.img_stars.height, assets.img_stars.width, assets.img_stars.height);
-        ctx.globalAlpha = 0>-2*Math.abs(progressPercent-0.5)+1?0:-2*Math.abs(progressPercent-0.5)+1;
+        ctx.globalAlpha = -2*Math.abs(progressPercent-0.5)+1;
         ctx.drawImage(assets.img_clouds2,0,this.vy, assets.img_clouds2.width, assets.img_clouds2.height);
         ctx.drawImage(assets.img_clouds2,0,this.vy-assets.img_clouds2.height, assets.img_clouds2.width, assets.img_clouds2.height);
-        ctx.globalAlpha = 1<(1-progressPercent*2)?1:(1-progressPercent*2);
+        ctx.globalAlpha = 0>(1-progressPercent*2)?0:(1-progressPercent*2);
         ctx.drawImage(assets.img_clouds,0,this.vy, assets.img_clouds.width, assets.img_clouds.height);
         ctx.drawImage(assets.img_clouds,0,this.vy-assets.img_clouds.height, assets.img_clouds.width, assets.img_clouds.height);
         ctx.globalAlpha = 1;
@@ -363,6 +363,6 @@ var gameEngine = {
         */
         if(Math.abs(this.vy) > assets.img_stars.height)
             this.vy = 0;
-        this.vy+=3;
+        this.vy+=2;
     }
 };

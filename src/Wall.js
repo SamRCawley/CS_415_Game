@@ -37,7 +37,7 @@ var wall = Class.create(Entity, {
             self._body = gameEngine.world.CreateBody(bodyDef)
             self._body.CreateFixture(wings);
             self._body.CreateFixture(planeBody);
-
+            this.moveSprite(0, 200);
     },
     update:function($super){
         $super();
@@ -52,6 +52,15 @@ var wall = Class.create(Entity, {
         if(!(ent instanceof Player))
         {
             ent._removeTrigger = true;
+        }
+        else
+        {
+            ent.takeDamage(5000);
+            if(ent.health == 0)
+            {
+                gameEngine.stopWorld();
+                gameEngine.gameOver=true;
+            }
         }
     }
 

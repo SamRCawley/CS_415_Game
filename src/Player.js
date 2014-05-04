@@ -61,10 +61,10 @@ var Player = Class.create(Entity, {
 
      takeDamage:function(damage)
      {
-        if((this.health - damage) < 0 )
-            this.health = 0;
         if(this.shield == true)
-            null;
+                 null;
+        else if((this.health - damage) < 0 )
+            this.health = 0;
         else
             this.health-=damage;
      },

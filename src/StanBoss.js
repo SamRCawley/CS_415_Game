@@ -29,7 +29,7 @@ var StanBoss = Class.create(Entity, {
             self._body = gameEngine.world.CreateBody(bodyDef)
             self._body.CreateFixture(fixDef);
 
-            this.moveSprite(Math.random()*30-15, Math.random()*15);
+            this.moveSprite(Math.random()*30-15, Math.random()*10+5);
 
 //            this.SetLinearVelocity(b2Vec2((document.getElementById("gameCanvas").width/2/b2Unit - this._currX)/SPEED_RATIO,(size.height - document.getElementById("gameCanvas").height/2/b2Unit - this._currY)/SPEED_RATIO));
     },

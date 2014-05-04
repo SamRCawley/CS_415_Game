@@ -29,7 +29,7 @@ var SquirrelEnemy = Class.create(Entity, {
             self._body = gameEngine.world.CreateBody(bodyDef)
             self._body.CreateFixture(fixDef);
 
-            this.moveSprite(Math.floor(Math.random() * 60) % 60,Math.floor(Math.random() * 60) % 60);
+             this.moveSprite(Math.random()*60-30, Math.random()*30);
     },
 
     update:function($super){
