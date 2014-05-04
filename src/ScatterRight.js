@@ -34,6 +34,7 @@ var ScatterRight = Class.create(Entity, {
 
     update:function($super){
         $super();
+        this.moveSprite(100, -500);
     },
     onCollide:function(ent){
         if(!(ent instanceof wall))

@@ -28,6 +28,7 @@ var ScatterLeft = Class.create(Entity, {
             self._body = gameEngine.world.CreateBody(bodyDef)
             self._body.CreateFixture(fixDef);
 
+
     },
 
     shoot:function(){
@@ -43,6 +44,7 @@ var ScatterLeft = Class.create(Entity, {
 
     update:function($super){
         $super();
+        this.moveSprite(-100, -500);
     },
     onCollide:function(ent){
         if(!(ent instanceof wall))
