@@ -17,7 +17,7 @@ var PlayerProjectile = Class.create(Entity, {
             bodyDef.fixedRotation = true;
             bodyDef.userData = self;
             var fixDef = new b2FixtureDef();
-            fixDef.density = 1.0;
+            fixDef.density = 0.01;
             fixDef.friction = 0.3;
             fixDef.restitution = 0.8;
             fixDef.shape = new b2PolygonShape();
@@ -45,11 +45,11 @@ var PlayerProjectile = Class.create(Entity, {
             ent.takeDamage(10);
             if(ent.health == 0)
             {
-//                ent._removeTrigger = true;
-                this._removeTrigger = true;
+                ent._removeTrigger = true;
                 gameEngine.Entities[0].increaseScore(100);
             }
         }
+        this._removeTrigger = true;
     }
 
 });
