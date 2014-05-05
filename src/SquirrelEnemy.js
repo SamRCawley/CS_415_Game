@@ -36,7 +36,7 @@ var SquirrelEnemy = Class.create(Entity, {
             $super();
           if(Math.floor(Math.random() * 70+1) % 70 == 0 && this._body)  //1 in 30 chance * 60 frames per second = 2 per second
           {
-              for(var i= -120; i<=120; i+=120)
+              for(var i= -30; i<=30; i+=30)
             {
                 var proj = new window[this.enemyProjectile[0]](this._currX+i, this._currY+this.pSprite.height/2+assets.img_Projectile.height/2);
                 proj.moveSprite(i*5,200);
