@@ -55,11 +55,7 @@ var SquirrelEnemy = Class.create(Entity, {
      },
     onCollide:function($super, ent){
                 $super(ent);
-                if(!(ent instanceof Player))
-                {
-                    ent._removeTrigger = true;
-                }
-                else
+                if(ent instanceof Player)
                 {
                     ent.takeDamage(5000);
                     if(ent.health == 0)
