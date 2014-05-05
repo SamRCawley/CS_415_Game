@@ -331,6 +331,9 @@ var gameEngine = {
     moveBackground:function()
     {
         var progressPercent = 1<this.runTime/120?1:this.runTime/120;
+        var progressToRainbow = 0;
+        if(progressPercent == 1)
+            progressToRainbow = 1<(this.runTime-120)/120?1:(this.runTime-120)/120;
         var dProgress = progressPercent*2<1?progressPercent*2:1;
         var c = document.getElementById("gameCanvas");
         var ctx = c.getContext('2d');
@@ -354,6 +357,9 @@ var gameEngine = {
         ctx.globalAlpha = 0>(1-progressPercent*2)?0:(1-progressPercent*2);
         ctx.drawImage(assets.img_clouds,0,this.vy, assets.img_clouds.width, assets.img_clouds.height);
         ctx.drawImage(assets.img_clouds,0,this.vy-assets.img_clouds.height, assets.img_clouds.width, assets.img_clouds.height);
+        ctx.globalAlpha = progressToRainbow;
+        ctx.drawImage(assets.img_rainbow,0,this.vy, assets.img_rainbow.width, assets.img_rainbow.height);
+        ctx.drawImage(assets.img_rainbow,0,this.vy-assets.img_rainbow.height, assets.img_rainbow.width, assets.img_rainbow.height);
         ctx.globalAlpha = 1;
         /*var bg1;
         if(this.Entities[0].score > 900 && this.Entities[0].score < 2000)

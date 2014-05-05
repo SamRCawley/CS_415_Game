@@ -22,6 +22,7 @@ var s_scatterShotMod = "./res/Normal/scattershotmod.png";
 var s_clouds = "./res/Normal/clouds.png";
 var s_clouds2 = "./res/Normal/clouds2.png";
 var s_stars = "./res/Normal/stars.png";
+var s_rainbow = "./res/Normal/rainbownight2.png";
 
 var assets = {
     img_Player:new Image(),
@@ -48,6 +49,7 @@ var assets = {
     img_clouds:new Image(),
     img_clouds2:new Image(),
     img_stars:new Image(),
+    img_rainbow:new Image(),
     loadAssets:function()
     {
         var c = document.getElementById("gameCanvas");
@@ -74,6 +76,7 @@ var assets = {
         this.img_scatterProjectile.src=(s_scatterProjectile);
         this.img_scatterShotMod.src=(s_scatterShotMod);
         this.img_clouds.src=(s_clouds);
+        this.img_rainbow.src=(s_rainbow);
         var self = this;
         this.img_clouds.onload = function(){var scale = c.width/self.img_clouds.naturalWidth;
                                             self.img_clouds.width = scale*self.img_clouds.naturalWidth;
@@ -86,6 +89,8 @@ var assets = {
         this.img_stars.onload = function(){var scale = c.width/self.img_stars.naturalWidth;
                                            self.img_stars.width = scale*self.img_stars.naturalWidth;
                                            self.img_stars.height = scale*self.img_stars.naturalHeight;};
-
+        this.img_rainbow.onload = function(){var scale = c.width/self.img_rainbow.naturalWidth;
+                                             self.img_rainbow.width = scale*self.img_rainbow.naturalWidth;
+                                             self.img_rainbow.height = scale*self.img_rainbow.naturalHeight;};
     }
 };
