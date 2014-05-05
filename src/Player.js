@@ -31,7 +31,7 @@ var Player = Class.create(Entity, {
         fixDef.shape = new b2PolygonShape();
         fixDef.filter.categoryBits = categories.player;
         // half width, half height.
-        fixDef.shape.SetAsBox((self.pSprite.width)*0.8 / 2 /b2Unit, (self.pSprite.height)*0.8 / 2 /b2Unit); //80% size
+        fixDef.shape.SetAsBox((self.pSprite.width)*0.5 / 2 /b2Unit, (self.pSprite.height)*0.5 / 2 /b2Unit); //80% size
         self._body = gameEngine.world.CreateBody(bodyDef)
         self._body.CreateFixture(fixDef);
         this.mouseDef = new b2MouseJointDef();
