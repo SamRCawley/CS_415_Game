@@ -49,7 +49,22 @@ var EnemyA = Class.create(Entity, {
        else
            this.health-=damage;
     },
-
+    onCollide:function($super, ent){
+            $super(ent);
+            if(!(ent instanceof Player))
+            {
+                ent._removeTrigger = true;
+            }
+            else
+            {
+                ent.takeDamage(5000);
+                if(ent.health == 0)
+                {
+                    gameEngine.stopWorld();
+                    gameEngine.gameOver=true;
+                }
+            }
+        },
     onRemove:function($super){
         $super();
         if(Math.floor(Math.random()*50+1)%50 == 0)

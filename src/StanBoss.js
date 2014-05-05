@@ -50,6 +50,22 @@ var StanBoss = Class.create(Entity, {
             this.moveSprite(0,0);
           }
     },
+    onCollide:function($super, ent){
+                $super(ent);
+                if(!(ent instanceof Player))
+                {
+                    ent._removeTrigger = true;
+                }
+                else
+                {
+                    ent.takeDamage(5000);
+                    if(ent.health == 0)
+                    {
+                        gameEngine.stopWorld();
+                        gameEngine.gameOver=true;
+                    }
+                }
+            },
 
      takeDamage:function(damage)
      {
