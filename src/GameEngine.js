@@ -41,6 +41,12 @@ var gameEngine = {
     },
     startWorld:function()
     {
+        var self = this;
+        document.onkeydown=function(e){
+              if  (e.keyCode=='83'){
+                   var boss = new window["StanBoss"](c.width*1/2, 20);
+                   self.Entities.push(boss);
+              }};
         this.vy=0;
         this.runTime=0;
         this.prevUpdate = new Date();
